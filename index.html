@@ -1002,6 +1002,47 @@ footer{
 .footer-bottom .g{color:var(--gold)}
 
 /* ─────────────────────────────────────────
+   FAQ
+───────────────────────────────────────── */
+#faq{background:var(--black);padding:120px 7%}
+.faq-header{text-align:center;margin-bottom:64px}
+.faq-list{max-width:860px;margin:0 auto}
+.faq-item{
+  border-bottom:1px solid var(--line);
+}
+.faq-q{
+  width:100%;background:none;border:none;
+  display:flex;justify-content:space-between;align-items:center;gap:24px;
+  padding:26px 0;cursor:pointer;text-align:left;
+  color:var(--white);
+  font-family:'Playfair Display',serif;
+  font-size:1.08rem;font-weight:400;
+  transition:color 0.3s;
+}
+.faq-q:hover{color:var(--gold)}
+.faq-q[aria-expanded="true"]{color:var(--gold)}
+.faq-icon{
+  flex-shrink:0;
+  font-size:1.4rem;font-weight:300;
+  color:var(--gold);
+  transition:transform 0.35s var(--ease);
+  line-height:1;
+}
+.faq-q[aria-expanded="true"] .faq-icon{transform:rotate(45deg)}
+.faq-a{
+  max-height:0;overflow:hidden;
+  transition:max-height 0.45s var(--ease),padding 0.35s;
+  padding:0;
+}
+.faq-a.open{max-height:600px;padding-bottom:28px}
+.faq-a p{
+  color:var(--muted);
+  font-size:0.92rem;line-height:1.8;
+  margin-bottom:10px;
+}
+.faq-a p:last-child{margin-bottom:0}
+
+/* ─────────────────────────────────────────
    WHATSAPP FAB
 ───────────────────────────────────────── */
 #wa-fab{
@@ -1773,7 +1814,7 @@ footer{
       </div>
 
       <div class="consult-image">
-        <img src="bottom/Screenshot_2026-06-10_at_10.55.45_AM.webp" alt="Architectural interior detail" loading="lazy">
+        <img src="logo1.png" alt="Inter Designs" loading="lazy">
         <div class="consult-sign">
           <div class="nm">Inter Designs</div>
           <span class="rl">Founder &amp; Principal Designer</span>
@@ -1877,6 +1918,122 @@ footer{
           <a href="https://wa.me/918610880225" target="_blank" rel="noopener">Message us on WhatsApp</a>
         </div>
       </form>
+    </div>
+
+  </div>
+</section>
+
+<!-- FAQ -->
+<section id="faq" class="cv-auto">
+  <div class="faq-header reveal">
+    <span class="lbl">Common Questions</span>
+    <h2 class="sec-title">Frequently Asked <em>Questions</em></h2>
+    <div class="rule"></div>
+  </div>
+  <div class="faq-list reveal">
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>What is the difference between an Interior Decorator and an Interior Designer?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p><strong>An Interior Designer</strong> is a trained professional who creates and designs interior spaces which are aesthetically attractive and functional.</p>
+        <p><strong>An Interior Decorator</strong>, on the other hand, views interior design with a largely cosmetic approach using decorative elements to merely rearrange existing spaces.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>If I have the time, money and the taste, why do I need an interior designer?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p><strong>Consider this:</strong> Whether you're planning new offices, or renovating your old ones, the investment is considerable. Wrong decisions could leave you with expensive mistakes long after the project is completed.</p>
+        <p><strong>We add value:</strong> We'll shed light on new ideas, better ways of doing things and ways to save money. Your spaces will be ready on time and on budget, will look great and will function well.</p>
+        <p><strong>Good design:</strong> We provide a wide variety of choices throughout the design process that assure your new space will reflect your unique personality — not a standard template.</p>
+        <p><strong>Team approach:</strong> We believe in a cooperative effort between the client, designer and other professionals — sharing ideas and creating spaces that balance aesthetics, functionality, ergonomics and economics.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>Is it true that a designer's influence leads to an increase in the project cost?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p>With years of specialized education and training, coupled with practical experience, interior designers are capable of bringing construction costs down considerably. Design solutions that ensure minimum wastage, assisting clients to get discounts from suppliers, and verifying contractors' bills, contribute largely to achieving a reduction in wastage.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>When should a designer be brought into a project?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p><strong>As soon as possible.</strong> The ideal time is during the planning stage — before actual construction begins. Involving a designer early allows door and window openings, layouts, and structural elements to be planned correctly from the start, saving the cost of structural changes later.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>How early can we start work on-site after commissioning the designer?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p>It is in the client's interest to allow the designer to finalise most of the paperwork, identify materials, and confirm contractors before starting actual site work. Rushing the initial stages often leads to increased costs due to delays and ever-changing layouts.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>How long will it take for the project to complete?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p>Completion depends on various factors: the scope of work, choice of design, your ability to make decisions from the choices provided, level of planning done before construction, time at your disposal, and flow of funds.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>How can the designer help me in procurement of materials?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p>Material procurement is generally left to our clients. However, if desired, we can assist in procuring quality material at the best possible price. We operate strictly on a fee-to-service basis and pass on all professional discounts and commissions to our clients, protecting their interests at all times.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>How does the designer go about initial consultations?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p>At a retention fee (adjusted in the final amount), we take up site measurements, come up with options for the basic plan, and hold initial meetings to understand each other better. This helps us arrive at the final estimated cost based on your brief and requirements. Our fee is generally a lump sum or per sq.ft basis rather than a percentage, to avoid any influence on total project cost.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>Can cost be determined before the beginning of a project?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p>Certainly. Using a systematic approach, all items of work are clearly specified, quantified and budgeted. Prior to starting, we provide the client a final cost estimate. Where there is a limited budget, we work backwards and create the best possible design solution within the given cost. We are always steady to our clients' budgets.</p>
+      </div>
+    </div>
+
+    <div class="faq-item">
+      <button class="faq-q" aria-expanded="false">
+        <span>With so many different styles and materials, how do I choose the right product?</span>
+        <span class="faq-icon">+</span>
+      </button>
+      <div class="faq-a">
+        <p>There is no such thing as a "right" or "wrong" product — just the product best suited for your requirement. Identify the requirements of your project first, then explore the wide range of designs and colours, and select based on your taste. We guide you through this process every step of the way.</p>
+      </div>
     </div>
 
   </div>
@@ -2152,6 +2309,21 @@ filterBtns.forEach(btn => {
 });
 
 renderProjects('all');
+
+/* ── FAQ ACCORDION ── */
+document.querySelectorAll('.faq-q').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const isOpen = btn.getAttribute('aria-expanded') === 'true';
+    document.querySelectorAll('.faq-q').forEach(b => {
+      b.setAttribute('aria-expanded','false');
+      b.nextElementSibling.classList.remove('open');
+    });
+    if (!isOpen) {
+      btn.setAttribute('aria-expanded','true');
+      btn.nextElementSibling.classList.add('open');
+    }
+  });
+});
 
 /* ── BEFORE & AFTER CLICK TO PLAY / PAUSE ── */
 document.querySelectorAll('.ba-item').forEach(item => {
