@@ -572,21 +572,56 @@ section{padding:150px 7%}
 /* ─────────────────────────────────────────
    BEFORE & AFTER
 ───────────────────────────────────────── */
-#before-after{background:var(--ivory)}
-.ba-grid{
-  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:64px;
+#before-after{background:var(--ink)}
+/* ── drag sliders ── */
+.ba-sliders{
+  display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:64px;
 }
-.ba-grid .ba-item:nth-child(4),.ba-grid .ba-item:nth-child(5){
-  grid-column:span 1;
+.ba-slider{
+  position:relative;overflow:hidden;border-radius:4px;
+  aspect-ratio:4/3;cursor:col-resize;user-select:none;
+  background:var(--surface);
+}
+.ba-slider img{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;
+  pointer-events:none;
+}
+.ba-slider .ba-after{z-index:1;}
+.ba-slider .ba-before{z-index:2;clip-path:inset(0 50% 0 0);transition:clip-path 0s;}
+.ba-divider{
+  position:absolute;top:0;bottom:0;left:50%;z-index:3;
+  width:3px;background:var(--gold);
+  transform:translateX(-50%);
+  pointer-events:none;
+}
+.ba-handle{
+  position:absolute;top:50%;left:50%;z-index:4;
+  width:44px;height:44px;
+  background:var(--gold);
+  border-radius:50%;
+  transform:translate(-50%,-50%);
+  display:flex;align-items:center;justify-content:center;
+  box-shadow:0 4px 16px rgba(0,0,0,0.5);
+  pointer-events:none;
+}
+.ba-handle svg{width:20px;height:20px;fill:#1B2234;}
+.ba-tag{
+  position:absolute;bottom:14px;z-index:5;
+  font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;
+  background:rgba(0,0,0,0.6);color:#fff;
+  padding:4px 10px;border-radius:2px;pointer-events:none;
+}
+.ba-tag.before{left:14px;}
+.ba-tag.after{right:14px;}
+/* ── video grid ── */
+.ba-grid{
+  display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:32px;
 }
 .ba-item{
   position:relative;overflow:hidden;border-radius:2px;
-  aspect-ratio:9/16;
-  background:var(--ivory2);
+  aspect-ratio:9/16;background:var(--surface);
 }
-.ba-video{
-  width:100%;height:100%;object-fit:cover;display:block;
-}
+.ba-video{width:100%;height:100%;object-fit:cover;display:block;}
 .ba-play{
   position:absolute;inset:0;
   display:flex;align-items:center;justify-content:center;
@@ -596,6 +631,9 @@ section{padding:150px 7%}
 .ba-play:hover{background:rgba(0,0,0,0.15)}
 .ba-play svg{width:52px;height:52px;filter:drop-shadow(0 2px 8px rgba(0,0,0,0.5))}
 .ba-item.playing .ba-play{display:none}
+@media(max-width:900px){
+  .ba-sliders{grid-template-columns:1fr;}
+}
 @media(max-width:768px){
   .ba-grid{grid-template-columns:1fr 1fr;gap:12px}
 }
@@ -807,11 +845,20 @@ section{padding:150px 7%}
 ───────────────────────────────────────── */
 #cta-band{
   padding:96px 6%;
-  background:var(--surface2);
+  background:var(--ink);
+  position:relative;
+  overflow:hidden;
   border-top:1px solid var(--line);
   border-bottom:1px solid var(--line);
   text-align:center;
 }
+#cta-band::before{
+  content:'';
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse at 50% 60%,rgba(199,168,109,0.13),transparent 65%);
+  pointer-events:none;
+}
+#cta-band>*{position:relative;z-index:1}
 #cta-band h2{
   font-family:'Playfair Display',serif;
   font-size:clamp(2rem,4.5vw,3.8rem);
@@ -1181,7 +1228,7 @@ footer{
   /* CONTACT */
   .consult-wrap{grid-template-columns:1fr;gap:40px}
   .cf-row,.cf-row{grid-template-columns:1fr}
-  .consult-image{display:none}
+  .consult-image{display:block}
   .cf-field input,.cf-field select,.cf-field textarea{
     font-size:16px; /* prevent iOS zoom */
     padding:12px 0;
@@ -1405,13 +1452,40 @@ footer{
 <div class="gold-line"></div>
 
 <!-- BEFORE & AFTER -->
-<section id="before-after" class="cv-auto theme-light">
+<section id="before-after" class="cv-auto">
   <div class="reveal" style="text-align:center">
     <span class="lbl">Transformations</span>
     <h2 class="sec-title">Before &amp; <em>After</em></h2>
     <div class="rule rule-center"></div>
+    <p style="color:var(--muted);font-size:0.82rem;margin-top:12px;">Drag the slider to reveal the transformation</p>
   </div>
-  <div class="ba-grid">
+
+  <!-- DRAG SLIDERS -->
+  <div class="ba-sliders reveal">
+    <div class="ba-slider" data-slider>
+      <img class="ba-after" src="before after/after.webp" alt="After">
+      <img class="ba-before" src="before after/before.webp" alt="Before">
+      <div class="ba-divider"></div>
+      <div class="ba-handle">
+        <svg viewBox="0 0 24 24"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7" stroke="#1B2234" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="ba-tag before">Before</span>
+      <span class="ba-tag after">After</span>
+    </div>
+    <div class="ba-slider" data-slider>
+      <img class="ba-after" src="before after/after2.webp" alt="After">
+      <img class="ba-before" src="before after/before2.webp" alt="Before">
+      <div class="ba-divider"></div>
+      <div class="ba-handle">
+        <svg viewBox="0 0 24 24"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7" stroke="#1B2234" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div>
+      <span class="ba-tag before">Before</span>
+      <span class="ba-tag after">After</span>
+    </div>
+  </div>
+
+  <!-- VIDEOS -->
+  <div class="ba-grid" style="margin-top:48px">
     <div class="ba-item reveal delay-1">
       <video class="ba-video" playsinline>
         <source src="beforeaftervideos/WhatsApp Video 2026-06-10 at 19.49.56.mp4" type="video/mp4">
@@ -1463,15 +1537,6 @@ footer{
       <div class="rule"></div>
       <div class="why-items">
 
-        <div class="why-item">
-          <div class="why-icon-box">
-            <svg viewBox="0 0 24 24"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
-          </div>
-          <div>
-            <h4>Bespoke 3D Previews</h4>
-            <p>Experience your redesigned space in photorealistic 3D before any work begins — complete clarity, zero guesswork.</p>
-          </div>
-        </div>
 
         <div class="why-item">
           <div class="why-icon-box">
@@ -1745,27 +1810,81 @@ footer{
           <div class="t-rating">
             <span></span><span></span><span></span><span></span><span></span>
           </div>
-          <p class="t-quote">My experience was seamless with the team. They have a highly professional coordination team and a very detailed process. Their commitment to work is excellent — they took our requirements and suggestions seriously and designed around them perfectly.</p>
-          <div class="t-name">Sunil Gemawath</div>
-          <div class="t-role">Client · 3 months ago</div>
+          <p class="t-quote">I can't say enough great things about the team! They listened to my concerns and were able to bring creative ideas to solve my design dilemmas. We are still working on implementing their ideas for our project and loving how it is turning out!</p>
+          <div class="t-name">Ramkrishna Bhat</div>
+          <div class="t-role">Local Guide</div>
         </div>
 
         <div class="t-slide">
           <div class="t-rating">
             <span></span><span></span><span></span><span></span><span></span>
           </div>
-          <p class="t-quote">We had a very pleasant experience working with the team on our project. They understood our needs, gave quality time on site, personally assisted in material selections, completed the work on time, and provided excellent post-project support.</p>
-          <div class="t-name">Sapna Jhaver</div>
-          <div class="t-role">Client · 2 weeks ago</div>
+          <p class="t-quote">We love the interior of the house. Even now, after 7 years, people still compliment on how new and modern it looks. At the time when the flat was being designed, all our views were heard and accordingly the designing was done. We would like to thank the designer who designed the house as if it were her own. Highly recommend!</p>
+          <div class="t-name">Ikshu Sakariya</div>
+          <div class="t-role">Client</div>
         </div>
 
         <div class="t-slide">
           <div class="t-rating">
             <span></span><span></span><span></span><span></span><span></span>
           </div>
-          <p class="t-quote">Our house is designed beautifully and we are very happy with the complete interiors. Very honest approach from designing to execution level. We will definitely recommend Inter Designs for interior projects — they are the best for both commercial and residential.</p>
+          <p class="t-quote">Committed, enthusiastic, passionate, timely and of course honestly respect &amp; valued client's suggestions.</p>
+          <div class="t-name">Rathimala Vijay</div>
+          <div class="t-role">Client</div>
+        </div>
+
+        <div class="t-slide">
+          <div class="t-rating">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <p class="t-quote">Our house is designed well and we are very happy and satisfied with complete interiors. Very honest approach from designing to execution level. We will definitely recommend Inter Designs for interior projects. Kindly reach out for best interiors for commercial and residence.</p>
           <div class="t-name">Asha Gemawath</div>
-          <div class="t-role">Client · 2 years ago</div>
+          <div class="t-role">Client</div>
+        </div>
+
+        <div class="t-slide">
+          <div class="t-rating">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <p class="t-quote">Awesome work. All colours used were a treat to our eyes and even usage friendly too.</p>
+          <div class="t-name">Sudhir Jain</div>
+          <div class="t-role">Client</div>
+        </div>
+
+        <div class="t-slide">
+          <div class="t-rating">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <p class="t-quote">Amazing work... Skilled execution... N a very very talented designer...</p>
+          <div class="t-name">Yakshini 13</div>
+          <div class="t-role">Client</div>
+        </div>
+
+        <div class="t-slide">
+          <div class="t-rating">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <p class="t-quote">My experience was seamless with the team. They have good coordination, highly professional services, very detailed process. Their commitment to work is excellent. Best part is they took our requirements and suggestions as well and designed perfectly around them.</p>
+          <div class="t-name">Sunil Gemawath</div>
+          <div class="t-role">Client</div>
+        </div>
+
+        <div class="t-slide">
+          <div class="t-rating">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <p class="t-quote">We had a very pleasant experience working with the team on one of our projects. They understood our needs and preferences well, gave good time on site, personally assisted in material selections, completed the work on time, and also provided good post-project support whenever required.</p>
+          <div class="t-name">Sapna Jhaver</div>
+          <div class="t-role">Client</div>
+        </div>
+
+        <div class="t-slide">
+          <div class="t-rating">
+            <span></span><span></span><span></span><span></span><span></span>
+          </div>
+          <p class="t-quote">From planning to execution, the entire process was smooth and professional. The team understood our requirements perfectly and delivered exactly what we envisioned. Highly recommended. My parents are really happy with the design!</p>
+          <div class="t-name">Pranav Eashwaran G</div>
+          <div class="t-role">Client</div>
         </div>
 
       </div>
@@ -1776,6 +1895,12 @@ footer{
         <div class="t-dot active" id="td0"></div>
         <div class="t-dot" id="td1"></div>
         <div class="t-dot" id="td2"></div>
+        <div class="t-dot" id="td3"></div>
+        <div class="t-dot" id="td4"></div>
+        <div class="t-dot" id="td5"></div>
+        <div class="t-dot" id="td6"></div>
+        <div class="t-dot" id="td7"></div>
+        <div class="t-dot" id="td8"></div>
       </div>
       <button class="t-btn" id="tNext">&#8594;</button>
     </div>
@@ -1783,7 +1908,7 @@ footer{
 </section>
 
 <!-- CTA BAND -->
-<div id="cta-band" class="reveal cv-auto theme-light">
+<div id="cta-band" class="reveal cv-auto">
   <h2>Ready to Transform<br><em style="color:var(--gold);font-style:italic">Your Space?</em></h2>
   <p>Your dream interior is one conversation away.<br>Let's begin with a complimentary design consultation.</p>
   <a href="#contact" class="btn-gold">Book Free Consultation</a>
@@ -2161,10 +2286,10 @@ function closeMob(){ ham.classList.remove('open'); mob.classList.remove('open');
 /* ── TESTIMONIALS SLIDER ── */
 let tCur=0;
 const tTrack = document.getElementById('tTrack');
-const tDots = [document.getElementById('td0'),document.getElementById('td1'),document.getElementById('td2')];
+const tDots = [document.getElementById('td0'),document.getElementById('td1'),document.getElementById('td2'),document.getElementById('td3'),document.getElementById('td4'),document.getElementById('td5'),document.getElementById('td6'),document.getElementById('td7'),document.getElementById('td8')];
 function gotoT(n){
   tDots[tCur].classList.remove('active');
-  tCur=(n+3)%3;
+  tCur=(n+9)%9;
   tTrack.style.transform=`translateX(-${tCur*100}%)`;
   tDots[tCur].classList.add('active');
 }
@@ -2207,7 +2332,8 @@ const portfolioData = {
     { src: 'residential/image.webp', title: 'Residential Project 01', location: 'Chennai', type: 'Residential', year: '2024' },
     { src: 'residential/image2.webp', title: 'Residential Project 02', location: 'Chennai', type: 'Residential', year: '2024' },
     { src: 'residential/image3.webp', title: 'Residential Project 03', location: 'Chennai', type: 'Residential', year: '2024' },
-    { src: 'residential/image4.webp', title: 'Residential Project 04', location: 'Chennai', type: 'Residential', year: '2024' }
+    { src: 'residential/image4.webp', title: 'Residential Project 04', location: 'Chennai', type: 'Residential', year: '2024' },
+    { src: 'residential/wall decor.webp', title: 'Residential Project 05', location: 'Chennai', type: 'Residential', year: '2024' }
   ],
   commercial: [
     { src: 'commercial/Screenshot_2026-06-10_at_10.55.45_AM.webp', title: 'Commercial Project 01', location: 'Chennai', type: 'Commercial', year: '2024' },
@@ -2233,7 +2359,13 @@ const portfolioData = {
     { src: 'modular kitchen/WhatsApp Image 2026-06-29 at 00.119.33.jpeg', title: 'Modular Kitchen 03', location: 'Chennai', type: 'Modular Kitchen', year: '2024' },
     { src: 'modular kitchen/WhatsApp Image 2026-036-29 at 00.19.34.jpeg', title: 'Modular Kitchen 04', location: 'Chennai', type: 'Modular Kitchen', year: '2024' },
     { src: 'modular kitchen/WhatsApp Image 2026-063-29 at 00.19.33.jpeg', title: 'Modular Kitchen 05', location: 'Chennai', type: 'Modular Kitchen', year: '2024' },
-    { src: 'modular kitchen/WhatsApp Image 20326-06-29 at 00.19.34.jpeg', title: 'Modular Kitchen 06', location: 'Chennai', type: 'Modular Kitchen', year: '2024' }
+    { src: 'modular kitchen/WhatsApp Image 20326-06-29 at 00.19.34.jpeg', title: 'Modular Kitchen 06', location: 'Chennai', type: 'Modular Kitchen', year: '2024' },
+    { src: 'new modular kitchen/WhatsApp Image 2026-06-29 at 06.58.36.webp', title: 'Modular Kitchen 07', location: 'Chennai', type: 'Modular Kitchen', year: '2024' },
+    { src: 'new modular kitchen/WhatsApp Image 2026-06-29 at 06.58.37.webp', title: 'Modular Kitchen 08', location: 'Chennai', type: 'Modular Kitchen', year: '2024' },
+    { src: 'new modular kitchen/WhatsApp Image 2026-06-29 at 06.58.38.webp', title: 'Modular Kitchen 09', location: 'Chennai', type: 'Modular Kitchen', year: '2024' },
+    { src: 'new modular kitchen/WhatsApp Image 2026-06-29 at 07.00.18.webp', title: 'Modular Kitchen 10', location: 'Chennai', type: 'Modular Kitchen', year: '2024' },
+    { src: 'new modular kitchen/WhatsApp Image 2026-06-29 at 07.03.40.jpeg', title: 'Modular Kitchen 11', location: 'Chennai', type: 'Modular Kitchen', year: '2024' },
+    { src: 'new modular kitchen/WhatsApp Image 2026-06-29 at 07.03.41.jpeg', title: 'Modular Kitchen 12', location: 'Chennai', type: 'Modular Kitchen', year: '2024' }
   ]
 };
 
@@ -2330,6 +2462,34 @@ document.querySelectorAll('.faq-q').forEach(btn => {
       btn.nextElementSibling.classList.add('open');
     }
   });
+});
+
+/* ── BEFORE & AFTER DRAG SLIDERS ── */
+document.querySelectorAll('[data-slider]').forEach(slider => {
+  const before = slider.querySelector('.ba-before');
+  const divider = slider.querySelector('.ba-divider');
+  const handle = slider.querySelector('.ba-handle');
+  let dragging = false;
+
+  function setPos(pct) {
+    pct = Math.max(2, Math.min(98, pct));
+    before.style.clipPath = `inset(0 ${100 - pct}% 0 0)`;
+    divider.style.left = pct + '%';
+    handle.style.left = pct + '%';
+  }
+
+  function getPercent(clientX) {
+    const rect = slider.getBoundingClientRect();
+    return ((clientX - rect.left) / rect.width) * 100;
+  }
+
+  slider.addEventListener('mousedown', e => { dragging = true; setPos(getPercent(e.clientX)); });
+  window.addEventListener('mousemove', e => { if (dragging) setPos(getPercent(e.clientX)); });
+  window.addEventListener('mouseup', () => { dragging = false; });
+
+  slider.addEventListener('touchstart', e => { dragging = true; setPos(getPercent(e.touches[0].clientX)); }, {passive:true});
+  window.addEventListener('touchmove', e => { if (dragging) setPos(getPercent(e.touches[0].clientX)); }, {passive:true});
+  window.addEventListener('touchend', () => { dragging = false; });
 });
 
 /* ── BEFORE & AFTER CLICK TO PLAY / PAUSE ── */
