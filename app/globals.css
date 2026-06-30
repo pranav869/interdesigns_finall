@@ -1,0 +1,25 @@
+@import "tailwindcss";
+
+:root {
+  --gold: #c7a86d;
+  --gold-light: #d4b87a;
+  --ink: #0f1115;
+  --black: #0a0b0e;
+  --surface: #161b24;
+  --white: #f5f0e8;
+  --line: rgba(199,168,109,0.18);
+  --ease: cubic-bezier(0.25,0.46,0.45,0.94);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--ink);
+  color: var(--white);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--gold); color: var(--black); }

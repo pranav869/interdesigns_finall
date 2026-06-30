@@ -1,0 +1,196 @@
+'use client'
+import { useState, useEffect, useCallback } from 'react'
+
+interface Props {
+  images: string[]         // full URLs
+  altPrefix?: string
+}
+
+export default function GalleryLightbox({ images, altPrefix = 'Project image' }: Props) {
+  const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
+  const [loaded, setLoaded] = useState<Record<number, boolean>>({})
+
+  const close = useCallback(() => setLightboxIndex(null), [])
+  const prev = useCallback(() => setLightboxIndex(i => i !== null ? (i - 1 + images.length) % images.length : null), [images.length])
+  const next = useCallback(() => setLightboxIndex(i => i !== null ? (i + 1) % images.length : null), [images.length])
+
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (lightboxIndex === null) return
+      if (e.key === 'Escape') close()
+      if (e.key === 'ArrowLeft') prev()
+      if (e.key === 'ArrowRight') next()
+    }
+    window.addEventListener('keydown', onKey)
+    return () => window.removeEventListener('keydown', onKey)
+  }, [lightboxIndex, close, prev, next])
+
+  useEffect(() => {
+    document.body.style.overflow = lightboxIndex !== null ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [lightboxIndex])
+
+  return (
+    <>
+      {/* Masonry grid */}
+      <div
+        style={{
+          columns: 'clamp(240px, 33%, 420px)',
+          gap: '12px',
+        }}
+      >
+        {images.map((url, i) => (
+          <div
+            key={i}
+            onClick={() => setLightboxIndex(i)}
+            style={{
+              marginBottom: '12px',
+              overflow: 'hidden',
+              cursor: 'pointer',
+              position: 'relative',
+              background: '#0f1115',
+              borderRadius: '2px',
+              breakInside: 'avoid',
+            }}
+            className="group"
+          >
+            {/* Skeleton */}
+            {!loaded[i] && (
+              <div style={{ height: 240, background: 'linear-gradient(110deg,#1a1f2e 30%,#242b3d 50%,#1a1f2e 70%)', backgroundSize: '200% 100%', animation: 'shimmer 1.6s infinite' }} />
+            )}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={url}
+              alt={`${altPrefix} ${i + 1}`}
+              loading="lazy"
+              onLoad={() => setLoaded(prev => ({ ...prev, [i]: true }))}
+              style={{
+                width: '100%',
+                display: 'block',
+                opacity: loaded[i] ? 1 : 0,
+                transition: 'opacity 0.4s ease, transform 0.5s ease',
+              }}
+              className="group-hover:scale-[1.03] transition-transform duration-500"
+            />
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'rgba(10,11,14,0.35)',
+                opacity: 0,
+                transition: 'opacity 0.3s ease',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+              className="group-hover:opacity-100"
+            >
+              <span style={{ color: '#fff', fontSize: '1.5rem', lineHeight: 1 }}>⤢</span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Lightbox */}
+      {lightboxIndex !== null && (
+        <div
+          onClick={close}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 9999,
+            background: 'rgba(5,5,8,0.96)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backdropFilter: 'blur(12px)',
+          }}
+        >
+          {/* Close */}
+          <button
+            onClick={close}
+            style={{
+              position: 'absolute',
+              top: 24,
+              right: 28,
+              background: 'none',
+              border: 'none',
+              color: '#f5f0e8',
+              fontSize: '1.8rem',
+              cursor: 'pointer',
+              zIndex: 10,
+            }}
+          >✕</button>
+
+          {/* Prev */}
+          <button
+            onClick={e => { e.stopPropagation(); prev() }}
+            style={{
+              position: 'absolute',
+              left: 24,
+              background: 'rgba(199,168,109,0.12)',
+              border: '1px solid rgba(199,168,109,0.25)',
+              borderRadius: '50%',
+              width: 48,
+              height: 48,
+              color: '#c7a86d',
+              fontSize: '1.2rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >←</button>
+
+          {/* Image */}
+          <div onClick={e => e.stopPropagation()} style={{ maxWidth: '90vw', maxHeight: '90vh' }}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src={images[lightboxIndex]}
+              alt={`${altPrefix} ${lightboxIndex + 1}`}
+              style={{ maxWidth: '90vw', maxHeight: '90vh', objectFit: 'contain', borderRadius: '2px' }}
+            />
+            <p style={{
+              textAlign: 'center',
+              marginTop: 12,
+              fontFamily: 'Inter, sans-serif',
+              fontSize: '0.65rem',
+              letterSpacing: '0.2em',
+              textTransform: 'uppercase',
+              color: 'rgba(199,168,109,0.5)',
+            }}>
+              {lightboxIndex + 1} / {images.length}
+            </p>
+          </div>
+
+          {/* Next */}
+          <button
+            onClick={e => { e.stopPropagation(); next() }}
+            style={{
+              position: 'absolute',
+              right: 24,
+              background: 'rgba(199,168,109,0.12)',
+              border: '1px solid rgba(199,168,109,0.25)',
+              borderRadius: '50%',
+              width: 48,
+              height: 48,
+              color: '#c7a86d',
+              fontSize: '1.2rem',
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >→</button>
+        </div>
+      )}
+
+      <style>{`
+        @keyframes shimmer {
+          0% { background-position: -200% 0; }
+          100% { background-position: 200% 0; }
+        }
+      `}</style>
+    </>
+  )
+}
