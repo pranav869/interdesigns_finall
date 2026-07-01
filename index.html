@@ -396,13 +396,31 @@ section{padding:150px 7%}
   outline:5px solid var(--surface);
 }
 .about-year-badge{
-  position:absolute;top:44%;left:62%;
-  transform:translate(-50%,-50%);
+  position:absolute;bottom:24px;right:24px;
   width:104px;height:104px;
   background:var(--gold);
   display:flex;flex-direction:column;
   align-items:center;justify-content:center;
   text-align:center;z-index:3;
+}
+.about-city-badge{
+  position:absolute;top:16px;left:16px;
+  z-index:3;
+}
+.about-city-badge img{
+  width:auto;height:auto;
+  max-width:180px;
+}
+.about-city-label{
+  position:absolute;top:16px;left:16px;
+  z-index:3;
+  font-family:'Playfair Display',serif;
+  font-size:2.4rem;
+  font-weight:500;
+  color:#f5f0e8;
+  text-transform:uppercase;
+  letter-spacing:0.15em;
+  text-shadow:0 0 30px rgba(199,168,109,0.3);
 }
 .about-year-badge .num{
   font-family:'Playfair Display',serif;
@@ -1386,7 +1404,8 @@ footer{
 <section id="about" class="cv-auto theme-light">
   <div class="about-wrap">
     <div class="about-visual reveal-l">
-      <img class="about-img-primary" src="/2ndpage/Screenshot_2026-06-10_at_11.45.45_AM.webp" alt="Studio interior" loading="lazy">
+      <div class="about-city-label">City Style</div>
+      <img class="about-img-primary" src="/where-architecture-meets-artistry.webp" alt="Studio interior" loading="lazy">
       <div class="about-year-badge">
         <span class="num">15+</span>
         <span class="lbl-sm">Years of Excellence</span>

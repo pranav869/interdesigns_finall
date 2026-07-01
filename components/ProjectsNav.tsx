@@ -75,27 +75,46 @@ export default function ProjectsNav() {
             { label: 'Kitchens', href: '/projects/modular-kitchen' },
           ].map(({ label, href }) => (
             <li key={href}>
-              <Link
-                href={href}
-                style={{
-                  fontFamily: 'Inter, sans-serif',
-                  fontSize: '11px',
-                  letterSpacing: '0.3em',
-                  textTransform: 'uppercase',
-                  color: 'rgba(255,255,255,0.74)',
-                  fontWeight: 400,
-                  textDecoration: 'none',
-                  transition: 'color 0.3s ease',
-                }}
-                className="hover:text-yellow-400"
-              >
-                {label}
-              </Link>
+              {href === '/' || href.startsWith('/#') ? (
+                <a
+                  href={href}
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '11px',
+                    letterSpacing: '0.3em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.74)',
+                    fontWeight: 400,
+                    textDecoration: 'none',
+                    transition: 'color 0.3s ease',
+                  }}
+                  className="hover:text-yellow-400"
+                >
+                  {label}
+                </a>
+              ) : (
+                <Link
+                  href={href}
+                  style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '11px',
+                    letterSpacing: '0.3em',
+                    textTransform: 'uppercase',
+                    color: 'rgba(255,255,255,0.74)',
+                    fontWeight: 400,
+                    textDecoration: 'none',
+                    transition: 'color 0.3s ease',
+                  }}
+                  className="hover:text-yellow-400"
+                >
+                  {label}
+                </Link>
+              )}
             </li>
           ))}
         </ul>
 
-        <Link
+        <a
           href="/#contact"
           style={{
             fontFamily: 'Inter, sans-serif',
@@ -113,7 +132,7 @@ export default function ProjectsNav() {
           className="hidden md:inline-flex hover:bg-yellow-400 hover:text-black transition-all"
         >
           Enquire →
-        </Link>
+        </a>>
 
         {/* Mobile hamburger */}
         <button
@@ -155,22 +174,39 @@ export default function ProjectsNav() {
             { label: 'Retail', href: '/projects/retail' },
             { label: 'Modular Kitchen', href: '/projects/modular-kitchen' },
             { label: 'Enquire', href: '/#contact' },
-          ].map(({ label, href }) => (
-            <Link
-              key={href}
-              href={href}
-              onClick={() => setMenuOpen(false)}
-              style={{
-                fontFamily: "'Playfair Display', serif",
-                fontSize: '2rem',
-                fontWeight: 400,
-                color: '#f5f0e8',
-                textDecoration: 'none',
-              }}
-            >
-              {label}
-            </Link>
-          ))}
+          ].map(({ label, href }) => 
+            href === '/' || href.startsWith('/#') ? (
+              <a
+                key={href}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '2rem',
+                  fontWeight: 400,
+                  color: '#f5f0e8',
+                  textDecoration: 'none',
+                }}
+              >
+                {label}
+              </a>
+            ) : (
+              <Link
+                key={href}
+                href={href}
+                onClick={() => setMenuOpen(false)}
+                style={{
+                  fontFamily: "'Playfair Display', serif",
+                  fontSize: '2rem',
+                  fontWeight: 400,
+                  color: '#f5f0e8',
+                  textDecoration: 'none',
+                }}
+              >
+                {label}
+              </Link>
+            )
+          )}
         </div>
       )}
     </>

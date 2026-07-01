@@ -46,15 +46,15 @@ export default function GalleryLightbox({ images, filenames, captions = {}, altP
       {/* Masonry grid */}
       <div
         style={{
-          columns: 'clamp(240px, 33%, 420px)',
-          gap: '12px',
+          columns: 'clamp(320px, 33%, 500px)',
+          gap: '16px',
         }}
       >
         {images.map((url, i) => {
           const filename = filenames[i] ?? ''
           const caption = captions[filename]
           return (
-          <div key={i} style={{ breakInside: 'avoid', marginBottom: '12px' }}>
+          <div key={i} style={{ breakInside: 'avoid', marginBottom: '16px' }}>
             {/* Caption block above image */}
             {caption && (
               <div style={{ marginBottom: '14px', padding: '16px 20px', background: 'linear-gradient(135deg, rgba(199,168,109,0.08) 0%, rgba(199,168,109,0.03) 100%)', borderRadius: '4px', borderLeft: '3px solid rgba(199,168,109,0.4)' }}>
