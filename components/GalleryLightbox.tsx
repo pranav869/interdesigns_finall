@@ -1,18 +1,29 @@
 'use client'
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
+import type { ImageCaption } from '@/lib/projects'
 
 interface Props {
   images: string[]         // full URLs
+  filenames: string[]      // original filenames matching images[]
+  captions?: Record<string, ImageCaption>
   altPrefix?: string
 }
 
-export default function GalleryLightbox({ images, altPrefix = 'Project image' }: Props) {
+export default function GalleryLightbox({ images, filenames, captions = {}, altPrefix = 'Project image' }: Props) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [loaded, setLoaded] = useState<Record<number, boolean>>({})
+  const imgRefs = useRef<(HTMLImageElement | null)[]>([])
 
   const close = useCallback(() => setLightboxIndex(null), [])
   const prev = useCallback(() => setLightboxIndex(i => i !== null ? (i - 1 + images.length) % images.length : null), [images.length])
   const next = useCallback(() => setLightboxIndex(i => i !== null ? (i + 1) % images.length : null), [images.length])
+
+  useEffect(() => {
+    // Check for already-cached images on mount
+    imgRefs.current.forEach((img, i) => {
+      if (img?.complete) setLoaded(prev => ({ ...prev, [i]: true }))
+    })
+  }, [])
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
@@ -39,27 +50,51 @@ export default function GalleryLightbox({ images, altPrefix = 'Project image' }:
           gap: '12px',
         }}
       >
-        {images.map((url, i) => (
-          <div
-            key={i}
+        {images.map((url, i) => {
+          const filename = filenames[i] ?? ''
+          const caption = captions[filename]
+          return (
+          <div key={i} style={{ breakInside: 'avoid', marginBottom: '12px' }}>
+            {/* Caption block above image */}
+            {caption && (
+              <div style={{ marginBottom: '14px', padding: '16px 20px', background: 'linear-gradient(135deg, rgba(199,168,109,0.08) 0%, rgba(199,168,109,0.03) 100%)', borderRadius: '4px', borderLeft: '3px solid rgba(199,168,109,0.4)' }}>
+                {caption.heading && (
+                  <p style={{
+                    fontFamily: 'Playfair Display, serif',
+                    fontSize: 'clamp(2.4rem, 5vw, 3.6rem)',
+                    fontWeight: 500,
+                    color: '#f5f0e8',
+                    marginBottom: '14px',
+                    letterSpacing: '0.08em',
+                    textShadow: '0 0 30px rgba(199,168,109,0.15)',
+                  }}>{caption.heading}</p>
+                )}
+                {caption.text && caption.text.split('\n\n').map((para, pi) => (
+                  <p key={pi} style={{
+                    fontFamily: 'Inter, sans-serif',
+                    fontSize: '0.88rem',
+                    lineHeight: 1.85,
+                    color: 'rgba(245,240,232,0.72)',
+                    marginBottom: pi < caption.text!.split('\n\n').length - 1 ? '12px' : 0,
+                    letterSpacing: '0.02em',
+                  }}>{para}</p>
+                ))}
+              </div>
+            )}
+            <div
             onClick={() => setLightboxIndex(i)}
             style={{
-              marginBottom: '12px',
               overflow: 'hidden',
               cursor: 'pointer',
               position: 'relative',
               background: '#0f1115',
               borderRadius: '2px',
-              breakInside: 'avoid',
             }}
             className="group"
           >
-            {/* Skeleton */}
-            {!loaded[i] && (
-              <div style={{ height: 240, background: 'linear-gradient(110deg,#1a1f2e 30%,#242b3d 50%,#1a1f2e 70%)', backgroundSize: '200% 100%', animation: 'shimmer 1.6s infinite' }} />
-            )}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
+              ref={el => { imgRefs.current[i] = el }}
               src={url}
               alt={`${altPrefix} ${i + 1}`}
               loading="lazy"
@@ -67,11 +102,20 @@ export default function GalleryLightbox({ images, altPrefix = 'Project image' }:
               style={{
                 width: '100%',
                 display: 'block',
-                opacity: loaded[i] ? 1 : 0,
-                transition: 'opacity 0.4s ease, transform 0.5s ease',
+                transition: 'transform 0.5s ease',
               }}
               className="group-hover:scale-[1.03] transition-transform duration-500"
             />
+            {/* Skeleton overlay — fades out once image loads */}
+            {!loaded[i] && (
+              <div style={{
+                position: 'absolute', inset: 0,
+                background: 'linear-gradient(110deg,#1a1f2e 30%,#242b3d 50%,#1a1f2e 70%)',
+                backgroundSize: '200% 100%',
+                animation: 'shimmer 1.6s infinite',
+                transition: 'opacity 0.4s ease',
+              }} />
+            )}
             <div
               style={{
                 position: 'absolute',
@@ -88,7 +132,8 @@ export default function GalleryLightbox({ images, altPrefix = 'Project image' }:
               <span style={{ color: '#fff', fontSize: '1.5rem', lineHeight: 1 }}>⤢</span>
             </div>
           </div>
-        ))}
+          </div>
+        )})}
       </div>
 
       {/* Lightbox */}

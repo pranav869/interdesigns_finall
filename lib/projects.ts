@@ -3,6 +3,11 @@ import path from 'path'
 
 export type Category = 'residential' | 'commercial' | 'retail' | 'modular-kitchen'
 
+export interface ImageCaption {
+  heading?: string
+  text?: string
+}
+
 export interface Project {
   title: string
   location: string
@@ -13,8 +18,9 @@ export interface Project {
   slug: string
   folderPath: string  // absolute path to project folder
   publicImageBase: string  // URL prefix for images served via API
-  images: string[]  // filenames only e.g. ['01_reference.png', '02.png']
+  images: string[]  // filenames only e.g. ['02.png', '03.png']
   thumbnail: string  // filename of thumbnail
+  captions: Record<string, ImageCaption>  // filename -> caption
 }
 
 const EXTRACTED_ROOT = path.join(process.cwd(), 'final projects', 'Extracted')
@@ -56,12 +62,33 @@ function parseProjTxt(filePath: string): { title: string; location: string; desc
   }
 }
 
+// Per-project extra excludes keyed by folder basename
+const FOLDER_EXCLUDES: Record<string, string[]> = {
+  'Mr Sunil K Project': ['11.png', '17.png', '21.png', '24.png'],
+  'Mr.Kushalji Project': ['28.png'],
+}
+
+// Per-project allowed reference images (exceptions to global 01_reference filter)
+const ALLOWED_REFERENCE: Record<string, string[]> = {
+  'Tissot Showroom Project': ['01_reference.png'],
+}
+
 function getImagesInFolder(folderPath: string): string[] {
   const IMAGE_EXTS = ['.png', '.jpg', '.jpeg', '.webp', '.gif']
+  const folderName = path.basename(folderPath)
+  const extraExcludes = FOLDER_EXCLUDES[folderName] ?? []
+  const allowedRefs = ALLOWED_REFERENCE[folderName] ?? []
   try {
     return fs
       .readdirSync(folderPath)
       .filter(f => IMAGE_EXTS.includes(path.extname(f).toLowerCase()))
+      .filter(f => {
+        // Exclude all reference images site-wide, unless in allowed list
+        if (f.toLowerCase().startsWith('01_reference') && !allowedRefs.includes(f)) return false
+        // Exclude folder-specific files
+        if (extraExcludes.includes(f)) return false
+        return true
+      })
       .sort((a, b) => {
         // Sort numerically by leading number
         const numA = parseInt(a) || 999
@@ -74,9 +101,18 @@ function getImagesInFolder(folderPath: string): string[] {
 }
 
 function getThumbnail(images: string[]): string {
-  // Prefer 01_reference.* then first image
-  const ref = images.find(f => f.startsWith('01_reference'))
-  return ref ?? images[0] ?? ''
+  // Images are already filtered — use first available
+  return images[0] ?? ''
+}
+
+function readCaptions(folderPath: string): Record<string, ImageCaption> {
+  try {
+    const captionsPath = path.join(folderPath, 'captions.json')
+    if (!fs.existsSync(captionsPath)) return {}
+    return JSON.parse(fs.readFileSync(captionsPath, 'utf-8'))
+  } catch {
+    return {}
+  }
 }
 
 function readProjectsFromCategory(
@@ -117,6 +153,7 @@ function readProjectsFromCategory(
         publicImageBase: `/api/project-image/${category}/${encodeURIComponent(entry.name)}`,
         images,
         thumbnail,
+        captions: readCaptions(childPath),
       })
     } else {
       // Subcategory folder — go one level deeper
@@ -146,6 +183,7 @@ function readProjectsFromCategory(
           publicImageBase: `/api/project-image/${category}/${encodeURIComponent(entry.name)}/${encodeURIComponent(subEntry.name)}`,
           images,
           thumbnail,
+          captions: readCaptions(projectPath),
         })
       }
     }

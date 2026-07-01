@@ -1,6 +1,6 @@
 'use client'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import type { Project } from '@/lib/projects'
 
 interface Props {
@@ -10,6 +10,11 @@ interface Props {
 
 export default function ProjectCard({ project, index = 0 }: Props) {
   const [loaded, setLoaded] = useState(false)
+  const imgRef = useRef<HTMLImageElement>(null)
+
+  useEffect(() => {
+    if (imgRef.current?.complete) setLoaded(true)
+  }, [])
 
   const thumbnailUrl = project.thumbnail
     ? `${project.publicImageBase}/${encodeURIComponent(project.thumbnail)}`
@@ -29,25 +34,25 @@ export default function ProjectCard({ project, index = 0 }: Props) {
       className="group block relative overflow-hidden rounded-sm"
       style={{ animationDelay: `${index * 80}ms` }}
     >
-      {/* Skeleton */}
-      {!loaded && (
-        <div
-          className="absolute inset-0 z-10"
-          style={{ background: 'linear-gradient(110deg, #1a1f2e 30%, #242b3d 50%, #1a1f2e 70%)', backgroundSize: '200% 100%', animation: 'shimmer 1.6s infinite' }}
-        />
-      )}
-
       {/* Image */}
       <div className="relative overflow-hidden aspect-[4/3]" style={{ background: '#0f1115' }}>
         {thumbnailUrl && (
           // eslint-disable-next-line @next/next/no-img-element
           <img
+            ref={imgRef}
             src={thumbnailUrl}
             alt={project.title}
             loading="lazy"
             onLoad={() => setLoaded(true)}
             className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            style={{ opacity: loaded ? 1 : 0, transition: 'opacity 0.4s ease, transform 0.7s ease' }}
+            style={{ transition: 'transform 0.7s ease' }}
+          />
+        )}
+        {/* Skeleton overlay — sits on top, removed once loaded */}
+        {!loaded && (
+          <div
+            className="absolute inset-0 z-10"
+            style={{ background: 'linear-gradient(110deg, #1a1f2e 30%, #242b3d 50%, #1a1f2e 70%)', backgroundSize: '200% 100%', animation: 'shimmer 1.6s infinite' }}
           />
         )}
 

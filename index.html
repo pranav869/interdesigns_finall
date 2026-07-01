@@ -6,7 +6,7 @@
 <meta name="description" content="Inter Designs – Luxury Interior Design Studio in Chennai. Crafting exceptional residential, commercial and villa interiors with precision and elegance.">
 <meta name="keywords" content="luxury interior design, home interiors, office interiors, villa design, commercial interiors, Chennai, Kilpauk">
 <title>Inter Designs | Luxury Interior Design Studio · Chennai</title>
-<link rel="preload" as="image" href="homepage/1.webp" fetchpriority="high">
+<link rel="preload" as="image" href="/homepage/1.webp" fetchpriority="high">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Inter:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&display=swap&font-display=swap" rel="stylesheet" media="print" onload="this.media='all'">
@@ -569,6 +569,7 @@ section{padding:150px 7%}
   color:var(--muted);font-size:0.65rem;letter-spacing:0.22em;
   text-transform:uppercase;transition:all 0.3s;
   border-right:1px solid var(--line);
+  text-decoration:none;display:inline-block;cursor:pointer;
 }
 .f-btn:last-child{border-right:none}
 .f-btn.active,.f-btn:hover{background:var(--gold);color:var(--black)}
@@ -582,6 +583,7 @@ section{padding:150px 7%}
   aspect-ratio:4/3;
   opacity:0;transform:translateY(24px);
   transition:opacity 0.5s var(--ease),transform 0.5s var(--ease);
+  text-decoration:none;display:block;
 }
 .p-item.visible{opacity:1;transform:translateY(0)}
 .p-item img{
@@ -1362,9 +1364,9 @@ footer{
 
 <!-- HERO - BACKGROUND SLIDESHOW -->
 <section id="hero">
-  <div class="hero-bg active" style="background-image:url('homepage/1.webp?v=2')"></div>
-  <div class="hero-bg" style="background-image:url('homepage/back.webp?v=2')"></div>
-  <div class="hero-bg" style="background-image:url('homepage/image.webp?v=2')"></div>
+  <div class="hero-bg active" style="background-image:url('/homepage/1.webp?v=2')"></div>
+  <div class="hero-bg" style="background-image:url('/homepage/back.webp?v=2')"></div>
+  <div class="hero-bg" style="background-image:url('/homepage/image.webp?v=2')"></div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
     <div class="hero-tag">Luxury Interior Design · Chennai</div>
@@ -1384,7 +1386,7 @@ footer{
 <section id="about" class="cv-auto theme-light">
   <div class="about-wrap">
     <div class="about-visual reveal-l">
-      <img class="about-img-primary" src="2ndpage/Screenshot_2026-06-10_at_11.45.45_AM.webp" alt="Studio interior" loading="lazy">
+      <img class="about-img-primary" src="/2ndpage/Screenshot_2026-06-10_at_11.45.45_AM.webp" alt="Studio interior" loading="lazy">
       <div class="about-year-badge">
         <span class="num">15+</span>
         <span class="lbl-sm">Years of Excellence</span>
@@ -1427,7 +1429,7 @@ footer{
   <div class="services-grid">
 
     <div class="svc-card reveal delay-1">
-      <img src="residential/image.webp" alt="Residential" loading="lazy">
+      <img src="/residential/image.webp" alt="Residential" loading="lazy">
       <div class="svc-overlay">
         <span class="svc-num">01</span>
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(184,151,90,0.85)" stroke-width="1.2">
@@ -1441,21 +1443,33 @@ footer{
 
 
     <div class="svc-card reveal delay-1">
-      <img src="commercial/Screenshot_2026-06-10_at_10.55.45_AM.webp" alt="Commercial" loading="lazy">
+      <img src="/commercial/Screenshot_2026-06-10_at_10.55.45_AM.webp" alt="Commercial" loading="lazy">
       <div class="svc-overlay">
         <span class="svc-num">04</span>
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(184,151,90,0.85)" stroke-width="1.2">
           <rect x="4" y="2" width="16" height="20" rx="1"/><line x1="9" y1="7" x2="15" y2="7"/><line x1="9" y1="11" x2="15" y2="11"/><line x1="9" y1="15" x2="11" y2="15"/>
         </svg>
-        <div class="svc-name">Commercial Spaces</div>
+        <div class="svc-name">Retail Spaces</div>
         <p class="svc-desc">Retail, restaurants, hospitality — environments designed to attract, engage, and convert visitors into loyalists.</p>
       </div>
     </div>
 
     <div class="svc-card reveal delay-2">
-      <img src="modular_kitchen/Screenshot_2026-06-10_at_11.18.30_AM.webp" alt="Kitchen" loading="lazy">
+      <img src="/api/project-image/commercial/Global%20Sourcing%20Office%20Project/02.png" alt="Commercial" loading="lazy">
       <div class="svc-overlay">
         <span class="svc-num">05</span>
+        <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(184,151,90,0.85)" stroke-width="1.2">
+          <path d="M3 21h18M5 21V7l8-4 8 4v14M8 21v-9a2 2 0 012-2h4a2 2 0 012 2v9"/>
+        </svg>
+        <div class="svc-name">Commercial Spaces</div>
+        <p class="svc-desc">Corporate offices, workspaces, and business environments — designed for productivity, collaboration, and brand identity.</p>
+      </div>
+    </div>
+
+    <div class="svc-card reveal delay-3">
+      <img src="/modular_kitchen/Screenshot_2026-06-10_at_11.18.30_AM.webp" alt="Kitchen" loading="lazy">
+      <div class="svc-overlay">
+        <span class="svc-num">06</span>
         <svg class="svc-icon" viewBox="0 0 24 24" fill="none" stroke="rgba(184,151,90,0.85)" stroke-width="1.2">
           <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 002-2V2"/><line x1="7" y1="2" x2="7" y2="11"/><path d="M21 15V2a5 5 0 00-5 5v6h3a2 2 0 012 2zm0 0v7"/>
         </svg>
@@ -1476,35 +1490,33 @@ footer{
       <span class="lbl">Selected Work</span>
       <h2 class="sec-title">Featured <em>Projects</em></h2>
     </div>
+    <div class="portfolio-filters">
+      <a class="f-btn" href="/projects/residential">Residential</a>
+      <a class="f-btn" href="/projects/commercial">Commercial</a>
+      <a class="f-btn" href="/projects/retail">Retail</a>
+      <a class="f-btn" href="/projects/modular-kitchen">Modular Kitchen</a>
+    </div>
   </div>
-  <div class="portfolio-cats reveal">
-    <a class="p-cat-card" href="/projects/residential">
-      <div class="p-cat-img" style="background-image:url('residential/image.webp')"></div>
-      <div class="p-cat-overlay">
-        <span class="p-cat-label">Residential</span>
-        <span class="p-cat-arrow">→</span>
-      </div>
+  <div class="portfolio-grid reveal">
+    <a class="p-item" href="/projects/residential">
+      <div class="p-skeleton"></div>
+      <img src="/api/project-image/residential/City%20Style/Mr%20Surana%20Project/02.png" alt="Residential" loading="lazy">
+      <div class="p-overlay"><div class="p-info"><div class="p-title">Mr. Surana Residence</div><div class="p-meta"><span>Chennai</span><span class="sep">·</span><span>Residential</span></div></div></div>
     </a>
-    <a class="p-cat-card" href="/projects/commercial">
-      <div class="p-cat-img" style="background-image:url('commercial/Screenshot_2026-06-10_at_10.55.45_AM.webp')"></div>
-      <div class="p-cat-overlay">
-        <span class="p-cat-label">Commercial</span>
-        <span class="p-cat-arrow">→</span>
-      </div>
+    <a class="p-item" href="/projects/retail">
+      <div class="p-skeleton"></div>
+      <img src="/api/project-image/retail/Longines%20Showroom%20Project/02.png" alt="Retail" loading="lazy">
+      <div class="p-overlay"><div class="p-info"><div class="p-title">Longines Showroom</div><div class="p-meta"><span>EA Mall, Chennai</span><span class="sep">·</span><span>Retail</span></div></div></div>
     </a>
-    <a class="p-cat-card" href="/projects/retail">
-      <div class="p-cat-img" style="background-image:url('villlas/villa1.webp')"></div>
-      <div class="p-cat-overlay">
-        <span class="p-cat-label">Retail</span>
-        <span class="p-cat-arrow">→</span>
-      </div>
+    <a class="p-item" href="/projects/commercial">
+      <div class="p-skeleton"></div>
+      <img src="/api/project-image/commercial/Global%20Sourcing%20Office%20Project/02.png" alt="Commercial" loading="lazy">
+      <div class="p-overlay"><div class="p-info"><div class="p-title">Global Sourcing Office</div><div class="p-meta"><span>Chennai</span><span class="sep">·</span><span>Commercial</span></div></div></div>
     </a>
-    <a class="p-cat-card" href="/projects/modular-kitchen">
-      <div class="p-cat-img" style="background-image:url('modular_kitchen/Screenshot_2026-06-10_at_11.18.30_AM.webp')"></div>
-      <div class="p-cat-overlay">
-        <span class="p-cat-label">Modular Kitchen</span>
-        <span class="p-cat-arrow">→</span>
-      </div>
+    <a class="p-item" href="/projects/modular-kitchen/modular-kitchen">
+      <div class="p-skeleton"></div>
+      <img src="/modular-kitchen-thumb.webp" alt="Modular Kitchen" loading="lazy">
+      <div class="p-overlay"><div class="p-info"><div class="p-title">Modular Kitchen</div><div class="p-meta"><span>Modular Kitchen</span><span class="sep">·</span><span>Modular Kitchen</span></div></div></div>
     </a>
   </div>
 </section>
@@ -1523,8 +1535,8 @@ footer{
   <!-- DRAG SLIDERS -->
   <div class="ba-sliders reveal">
     <div class="ba-slider" data-slider>
-      <img class="ba-after" src="before after/after.webp" alt="After">
-      <img class="ba-before" src="before after/before.webp" alt="Before">
+      <img class="ba-after" src="/before-after/after.webp" alt="After">
+      <img class="ba-before" src="/before-after/before.webp" alt="Before">
       <div class="ba-divider"></div>
       <div class="ba-handle">
         <svg viewBox="0 0 24 24"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7" stroke="#1B2234" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1533,8 +1545,8 @@ footer{
       <span class="ba-tag after">After</span>
     </div>
     <div class="ba-slider" data-slider>
-      <img class="ba-after" src="before after/after2.webp" alt="After">
-      <img class="ba-before" src="before after/before2.webp" alt="Before">
+      <img class="ba-after" src="/before-after/after2.webp" alt="After">
+      <img class="ba-before" src="/before-after/before2.webp" alt="Before">
       <div class="ba-divider"></div>
       <div class="ba-handle">
         <svg viewBox="0 0 24 24"><path d="M8 5l-5 7 5 7M16 5l5 7-5 7" stroke="#1B2234" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1548,31 +1560,31 @@ footer{
   <div class="ba-grid" style="margin-top:48px">
     <div class="ba-item reveal delay-1">
       <video class="ba-video" playsinline>
-        <source src="beforeaftervideos/WhatsApp Video 2026-06-10 at 19.49.56.mp4" type="video/mp4">
+        <source src="/beforeaftervideos/WhatsApp Video 2026-06-10 at 19.49.56.mp4" type="video/mp4">
       </video>
       <div class="ba-play"><svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
     </div>
     <div class="ba-item reveal delay-2">
       <video class="ba-video" playsinline>
-        <source src="beforeaftervideos/WhatsApp Video 2026-06-10 at 19.49.58.mp4" type="video/mp4">
+        <source src="/beforeaftervideos/WhatsApp Video 2026-06-10 at 19.49.58.mp4" type="video/mp4">
       </video>
       <div class="ba-play"><svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
     </div>
     <div class="ba-item reveal delay-3">
       <video class="ba-video" playsinline>
-        <source src="beforeaftervideos/WhatsApp Video 2026-06-10 at 19.49.59.mp4" type="video/mp4">
+        <source src="/beforeaftervideos/WhatsApp Video 2026-06-10 at 19.49.59.mp4" type="video/mp4">
       </video>
       <div class="ba-play"><svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
     </div>
     <div class="ba-item reveal delay-4">
       <video class="ba-video" playsinline>
-        <source src="beforeaftervideos/WhatsApp Video 2026-06-10 at 19.50.00.mp4" type="video/mp4">
+        <source src="/beforeaftervideos/WhatsApp Video 2026-06-10 at 19.50.00.mp4" type="video/mp4">
       </video>
       <div class="ba-play"><svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
     </div>
     <div class="ba-item reveal delay-5">
       <video class="ba-video" playsinline>
-        <source src="beforeaftervideos/WhatsApp Video 2026-06-10 at 19.50.00 (1).mp4" type="video/mp4">
+        <source src="/beforeaftervideos/WhatsApp Video 2026-06-10 at 19.50.00 (1).mp4" type="video/mp4">
       </video>
       <div class="ba-play"><svg viewBox="0 0 24 24" fill="white"><polygon points="5,3 19,12 5,21"/></svg></div>
     </div>
@@ -1585,7 +1597,7 @@ footer{
 <section id="why" class="cv-auto">
   <div class="why-wrap">
     <div class="why-visual reveal-l">
-      <img src="section_image/image.webp?v=2" alt="Studio" loading="lazy">
+      <img src="/excellence-in-every-detail.webp" alt="Studio" loading="lazy">
       <div class="why-badge">
         <span class="big">4.9</span>
         <small>Google Rating</small>
@@ -1872,7 +1884,7 @@ footer{
           </div>
           <p class="t-quote">I can't say enough great things about the team! They listened to my concerns and were able to bring creative ideas to solve my design dilemmas. We are still working on implementing their ideas for our project and loving how it is turning out!</p>
           <div class="t-name">Ramkrishna Bhat</div>
-          <div class="t-role">Local Guide</div>
+          <div class="t-role">Client</div>
         </div>
 
         <div class="t-slide">
@@ -1970,8 +1982,8 @@ footer{
 <!-- CTA BAND -->
 <div id="cta-band" class="reveal cv-auto">
   <h2>Ready to Transform<br><em style="color:var(--gold);font-style:italic">Your Space?</em></h2>
-  <p>Your dream interior is one conversation away.<br>Let's begin with a complimentary design consultation.</p>
-  <a href="#contact" class="btn-gold">Book Free Consultation</a>
+  <p>Your dream interior is one conversation away.<br>Lets turn your dream to reality..</p>
+  <a href="#contact" class="btn-gold">Book Your Consultation Now</a>
 </div>
 
 <!-- FAQ -->
@@ -2116,7 +2128,7 @@ footer{
       </div>
 
       <div class="consult-image">
-        <img src="logo1.png" alt="Inter Designs" loading="lazy">
+        <img src="/logo1.png" alt="Inter Designs" loading="lazy">
       </div>
 
       <div class="consult-lines">
@@ -2164,9 +2176,11 @@ footer{
             <label>Property Type</label>
             <select name="property_type" required>
               <option value="" disabled selected hidden>Select</option>
-              <option>Private Residence</option>
+              <option>Independent House</option>
               <option>Penthouse / Apartment</option>
               <option>Commercial Space</option>
+              <option>Retail Space</option>
+              <option>Hospitality</option>
             </select>
           </div>
           <div class="cf-field has-arrow">
@@ -2186,6 +2200,7 @@ footer{
             <label>Investment</label>
             <select name="investment">
               <option value="" disabled selected hidden>Select</option>
+              <option>Below ₹15L</option>
               <option>₹15L – ₹30L</option>
               <option>₹30L – ₹60L</option>
               <option>₹60L – ₹1Cr</option>
@@ -2230,9 +2245,9 @@ footer{
       <h5>Services</h5>
       <ul>
         <li><a href="#">Residential Interiors</a></li>
-        <li><a href="#">Commercial Spaces</a></li>
+        <li><a href="#">Retail Spaces</a></li>
         <li><a href="#">Modular Kitchens</a></li>
-        <li><a href="#">3D Visualisation</a></li>
+        <li><a href="#">Commercial Spaces</a></li>
       </ul>
     </div>
     <div class="f-col">
@@ -2403,85 +2418,20 @@ const portfolioData = {
   ]
 };
 
-const grid = document.getElementById('portfolioGrid');
-const filterBtns = document.querySelectorAll('.f-btn[data-filter]');
-let currentFilter = 'all';
-
-function createCard(project, index) {
-  const card = document.createElement('div');
-  card.className = 'p-item';
-  card.innerHTML = `
-    <div class="p-skeleton"></div>
-    <img src="${project.src}" alt="${project.title}" loading="lazy">
-    <div class="p-overlay">
-      <div class="p-info">
-        <div class="p-title">${project.title}</div>
-        <div class="p-meta">
-          <span>${project.location}</span><span class="sep">·</span>
-          <span>${project.type}</span><span class="sep">·</span>
-          <span>${project.year}</span>
-        </div>
-      </div>
-    </div>
-  `;
-  
-  const img = card.querySelector('img');
-  const skeleton = card.querySelector('.p-skeleton');
-  
-  img.onload = () => {
+/* ── STATIC PORTFOLIO CARDS ── */
+document.querySelectorAll('.p-item img').forEach((img, i) => {
+  const skeleton = img.previousElementSibling;
+  const card = img.closest('.p-item');
+  setTimeout(() => { if (card) card.classList.add('visible'); }, i * 100);
+  img.addEventListener('load', () => {
     img.classList.add('loaded');
-    skeleton.style.display = 'none';
-  };
-  
-  return card;
-}
-
-function renderProjects(filter) {
-  grid.innerHTML = '';
-  let projects = [];
-  
-  if (filter === 'all') {
-    Object.values(portfolioData).forEach(category => {
-      if (category.length > 0) projects.push(category[0]);
-    });
-  } else {
-    projects = portfolioData[filter] || [];
-  }
-  
-  if (projects.length === 0) {
-    grid.innerHTML = '<p style="grid-column:1/-1;text-align:center;color:var(--muted);padding:60px;">No projects found.</p>';
-    return;
-  }
-  
-  projects.forEach((project, index) => {
-    const card = createCard(project, index);
-    grid.appendChild(card);
-    
-    setTimeout(() => {
-      card.classList.add('visible');
-    }, index * 80);
+    if (skeleton && skeleton.classList.contains('p-skeleton')) skeleton.style.display = 'none';
   });
-}
-
-filterBtns.forEach(btn => {
-  btn.addEventListener('click', () => {
-    filterBtns.forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentFilter = btn.dataset.filter;
-    
-    const cards = grid.querySelectorAll('.p-item');
-    cards.forEach(card => {
-      card.style.opacity = '0';
-      card.style.transform = 'translateY(24px)';
-    });
-    
-    setTimeout(() => {
-      renderProjects(currentFilter);
-    }, 300);
-  });
+  if (img.complete) {
+    img.classList.add('loaded');
+    if (skeleton && skeleton.classList.contains('p-skeleton')) skeleton.style.display = 'none';
+  }
 });
-
-renderProjects('all');
 
 /* ── FAQ ACCORDION ── */
 document.querySelectorAll('.faq-q').forEach(btn => {

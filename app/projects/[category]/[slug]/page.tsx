@@ -63,13 +63,13 @@ export default async function ProjectPage(
   const prevProject = currentIndex > 0 ? categoryProjects[currentIndex - 1] : null
   const nextProject = currentIndex < categoryProjects.length - 1 ? categoryProjects[currentIndex + 1] : null
 
-  // Build image URLs
-  const imageUrls = project.images.map(
+  // All images already exclude reference files — hero = first, gallery = all
+  const allImageUrls = project.images.map(
     filename => `${project.publicImageBase}/${encodeURIComponent(filename)}`
   )
-  const heroUrl = project.thumbnail
-    ? `${project.publicImageBase}/${encodeURIComponent(project.thumbnail)}`
-    : imageUrls[0] ?? ''
+  const heroUrl = allImageUrls[0] ?? ''
+  const galleryImages = project.images
+  const imageUrls = allImageUrls
 
   const locationDisplay = project.location
     ? project.location.charAt(0).toUpperCase() + project.location.slice(1)
@@ -229,8 +229,8 @@ export default async function ProjectPage(
               textTransform: 'uppercase',
               color: '#c7a86d',
               marginBottom: 36,
-            }}>Gallery · {imageUrls.length} Images</p>
-            <GalleryLightbox images={imageUrls} altPrefix={project.title} />
+            }}>Gallery · {galleryImages.length} Images</p>
+            <GalleryLightbox images={imageUrls} filenames={galleryImages} captions={project.captions} altPrefix={project.title} />
           </section>
         )}
 
