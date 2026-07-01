@@ -122,25 +122,6 @@ export default async function ProjectPage(
             maxWidth: '1400px',
             margin: '0 auto',
           }}>
-            {/* Breadcrumb */}
-            <div style={{
-              fontFamily: 'Inter, sans-serif',
-              fontSize: '0.62rem',
-              letterSpacing: '0.28em',
-              textTransform: 'uppercase',
-              color: 'rgba(199,168,109,0.6)',
-              marginBottom: '20px',
-              display: 'flex',
-              gap: 12,
-              alignItems: 'center',
-            }}>
-              <Link href="/#portfolio" style={{ color: 'inherit', textDecoration: 'none' }}>Portfolio</Link>
-              <span style={{ color: 'rgba(255,255,255,0.2)' }}>·</span>
-              <Link href={`/projects/${cat}`} style={{ color: 'inherit', textDecoration: 'none' }}>{project.categoryLabel}</Link>
-              <span style={{ color: 'rgba(255,255,255,0.2)' }}>·</span>
-              <span style={{ color: 'rgba(245,240,232,0.55)' }}>{project.title}</span>
-            </div>
-
             <h1 style={{
               fontFamily: "'Playfair Display', serif",
               fontSize: 'clamp(2.4rem, 6vw, 4.8rem)',
@@ -163,10 +144,6 @@ export default async function ProjectPage(
             }}>
               {locationDisplay && (
                 <span style={{ color: '#c7a86d' }}>📍 {locationDisplay}</span>
-              )}
-              <span style={{ color: 'rgba(255,255,255,0.4)' }}>{project.categoryLabel}</span>
-              {project.subcategory && (
-                <span style={{ color: 'rgba(255,255,255,0.3)' }}>{project.subcategory}</span>
               )}
             </div>
           </div>
