@@ -110,7 +110,7 @@ export default function ProjectsNav() {
             transition: 'all 0.3s ease',
             whiteSpace: 'nowrap',
           }}
-          className="hover:bg-yellow-400 hover:text-black transition-all"
+          className="hidden md:inline-flex hover:bg-yellow-400 hover:text-black transition-all"
         >
           Enquire →
         </Link>
