@@ -58,7 +58,6 @@ export default function ProjectsNav() {
         {/* Desktop links */}
         <ul
           style={{
-            display: 'flex',
             gap: '40px',
             listStyle: 'none',
             position: 'absolute',
