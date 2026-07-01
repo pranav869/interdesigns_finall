@@ -132,7 +132,7 @@ export default function ProjectsNav() {
           className="hidden md:inline-flex hover:bg-yellow-400 hover:text-black transition-all"
         >
           Enquire →
-        </a>>
+        </a>
 
         {/* Mobile hamburger */}
         <button
