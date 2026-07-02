@@ -61,7 +61,7 @@ export default function GalleryLightbox({ images, filenames, captions = {}, altP
                 {caption.heading && (
                   <p style={{
                     fontFamily: 'Playfair Display, serif',
-                    fontSize: 'clamp(2.4rem, 5vw, 3.6rem)',
+                    fontSize: 'clamp(1.8rem, 4vw, 2.6rem)',
                     fontWeight: 500,
                     color: '#f5f0e8',
                     marginBottom: '14px',
