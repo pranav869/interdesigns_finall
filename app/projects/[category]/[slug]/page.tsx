@@ -207,7 +207,7 @@ export default async function ProjectPage(
               color: '#c7a86d',
               marginBottom: 36,
             }}>Gallery · {galleryImages.length} Images</p>
-            <GalleryLightbox images={imageUrls} filenames={galleryImages} captions={project.captions} altPrefix={project.title} />
+            <GalleryLightbox images={imageUrls} filenames={galleryImages} captions={project.captions} altPrefix={project.title} showSectionHeadings={project.title === 'Mr. Ramabhat Residence'} />
           </section>
         )}
 

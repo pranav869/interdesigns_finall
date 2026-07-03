@@ -7,9 +7,10 @@ interface Props {
   filenames: string[]      // original filenames matching images[]
   captions?: Record<string, ImageCaption>
   altPrefix?: string
+  showSectionHeadings?: boolean
 }
 
-export default function GalleryLightbox({ images, filenames, captions = {}, altPrefix = 'Project image' }: Props) {
+export default function GalleryLightbox({ images, filenames, captions = {}, altPrefix = 'Project image', showSectionHeadings = false }: Props) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null)
   const [loaded, setLoaded] = useState<Record<number, boolean>>({})
   const imgRefs = useRef<(HTMLImageElement | null)[]>([])
@@ -43,98 +44,149 @@ export default function GalleryLightbox({ images, filenames, captions = {}, altP
 
   return (
     <>
-      {/* Masonry grid */}
-      <div
-        style={{
-          columns: 'clamp(320px, 33%, 500px)',
-          gap: '16px',
-        }}
-      >
-        {images.map((url, i) => {
-          const filename = filenames[i] ?? ''
-          const caption = captions[filename]
-          return (
-          <div key={i} style={{ breakInside: 'avoid', marginBottom: '16px' }}>
-            {/* Caption block above image */}
-            {caption && (
-              <div style={{ marginBottom: '14px', padding: '16px 20px', background: 'linear-gradient(135deg, rgba(199,168,109,0.08) 0%, rgba(199,168,109,0.03) 100%)', borderRadius: '4px', borderLeft: '3px solid rgba(199,168,109,0.4)' }}>
-                {caption.heading && (
-                  <p style={{
-                    fontFamily: 'Playfair Display, serif',
-                    fontSize: 'clamp(1.8rem, 4vw, 2.6rem)',
-                    fontWeight: 500,
-                    color: '#f5f0e8',
-                    marginBottom: '14px',
-                    letterSpacing: '0.08em',
-                    textShadow: '0 0 30px rgba(199,168,109,0.15)',
-                  }}>{caption.heading}</p>
-                )}
-                {caption.text && caption.text.split('\n\n').map((para, pi) => (
-                  <p key={pi} style={{
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: '0.88rem',
-                    lineHeight: 1.85,
-                    color: 'rgba(245,240,232,0.72)',
-                    marginBottom: pi < caption.text!.split('\n\n').length - 1 ? '12px' : 0,
-                    letterSpacing: '0.02em',
-                  }}>{para}</p>
-                ))}
-              </div>
-            )}
-            <div
-            onClick={() => setLightboxIndex(i)}
-            style={{
-              overflow: 'hidden',
-              cursor: 'pointer',
-              position: 'relative',
-              background: '#0f1115',
-              borderRadius: '2px',
-            }}
-            className="group"
-          >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              ref={el => { imgRefs.current[i] = el }}
-              src={url}
-              alt={`${altPrefix} ${i + 1}`}
-              loading="lazy"
-              onLoad={() => setLoaded(prev => ({ ...prev, [i]: true }))}
-              style={{
-                width: '100%',
-                display: 'block',
-                transition: 'transform 0.5s ease',
-              }}
-              className="group-hover:scale-[1.03] transition-transform duration-500"
-            />
-            {/* Skeleton overlay — fades out once image loads */}
-            {!loaded[i] && (
-              <div style={{
-                position: 'absolute', inset: 0,
-                background: 'linear-gradient(110deg,#1a1f2e 30%,#242b3d 50%,#1a1f2e 70%)',
-                backgroundSize: '200% 100%',
-                animation: 'shimmer 1.6s infinite',
-                transition: 'opacity 0.4s ease',
-              }} />
+      {/* Masonry grids */}
+      {(() => {
+        const groups: { folder: string, items: { url: string, filename: string, originalIndex: number }[] }[] = [];
+        if (showSectionHeadings) {
+          images.forEach((url, i) => {
+            const filename = filenames[i] ?? '';
+            // split by / or \ for cross-platform
+            const folder = filename.match(/[/\\]/) ? filename.split(/[/\\]/)[0] : 'Other';
+            let group = groups.find(g => g.folder === folder);
+            if (!group) {
+              group = { folder, items: [] };
+              groups.push(group);
+            }
+            group.items.push({ url, filename, originalIndex: i });
+          });
+          
+          // Explicit ordering as requested by user
+          const order = ['Dining Area', 'Kitchen', 'Living Area', 'Master Bedroom', 'Bedroom'];
+          groups.sort((a, b) => {
+            const idxA = order.indexOf(a.folder);
+            const idxB = order.indexOf(b.folder);
+            if (idxA !== -1 && idxB !== -1) return idxA - idxB;
+            if (idxA !== -1) return -1;
+            if (idxB !== -1) return 1;
+            return a.folder.localeCompare(b.folder);
+          });
+        } else {
+          groups.push({
+            folder: '',
+            items: images.map((url, i) => ({ url, filename: filenames[i] ?? '', originalIndex: i }))
+          });
+        }
+
+        return groups.map((group, gIdx) => (
+          <div key={gIdx} style={{ marginBottom: showSectionHeadings ? '64px' : '0' }}>
+            {showSectionHeadings && (
+              <h2 style={{
+                fontFamily: 'Playfair Display, serif',
+                fontSize: '2rem',
+                color: '#c7a86d',
+                marginBottom: '32px',
+                textTransform: 'capitalize',
+                borderBottom: '1px solid rgba(199,168,109,0.2)',
+                paddingBottom: '12px'
+              }}>
+                {group.folder}
+              </h2>
             )}
             <div
               style={{
-                position: 'absolute',
-                inset: 0,
-                background: 'rgba(10,11,14,0.35)',
-                opacity: 0,
-                transition: 'opacity 0.3s ease',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
+                columns: 'clamp(320px, 33%, 500px)',
+                gap: '16px',
               }}
-              className="group-hover:opacity-100"
             >
-              <span style={{ color: '#fff', fontSize: '1.5rem', lineHeight: 1 }}>⤢</span>
+              {group.items.map(item => {
+                const { url, filename, originalIndex: i } = item;
+                const caption = captions[filename]
+                return (
+                  <div key={i} style={{ breakInside: 'avoid', marginBottom: '16px' }}>
+                    {/* Caption block above image */}
+                    {caption && (
+                      <div style={{ marginBottom: '14px', padding: '16px 20px', background: 'linear-gradient(135deg, rgba(199,168,109,0.08) 0%, rgba(199,168,109,0.03) 100%)', borderRadius: '4px', borderLeft: '3px solid rgba(199,168,109,0.4)' }}>
+                        {caption.heading && (
+                          <p style={{
+                            fontFamily: 'Playfair Display, serif',
+                            fontSize: 'clamp(1.8rem, 4vw, 2.6rem)',
+                            fontWeight: 500,
+                            color: '#f5f0e8',
+                            marginBottom: '14px',
+                            letterSpacing: '0.08em',
+                            textShadow: '0 0 30px rgba(199,168,109,0.15)',
+                          }}>{caption.heading}</p>
+                        )}
+                        {caption.text && caption.text.split('\n\n').map((para, pi) => (
+                          <p key={pi} style={{
+                            fontFamily: 'Inter, sans-serif',
+                            fontSize: '0.88rem',
+                            lineHeight: 1.85,
+                            color: 'rgba(245,240,232,0.72)',
+                            marginBottom: pi < caption.text!.split('\n\n').length - 1 ? '12px' : 0,
+                            letterSpacing: '0.02em',
+                          }}>{para}</p>
+                        ))}
+                      </div>
+                    )}
+                    <div
+                      onClick={() => setLightboxIndex(i)}
+                      style={{
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        position: 'relative',
+                        background: '#0f1115',
+                        borderRadius: '2px',
+                      }}
+                      className="group"
+                    >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img
+                        ref={el => { imgRefs.current[i] = el }}
+                        src={url}
+                        alt={`${altPrefix} ${i + 1}`}
+                        loading="lazy"
+                        onLoad={() => setLoaded(prev => ({ ...prev, [i]: true }))}
+                        style={{
+                          width: '100%',
+                          display: 'block',
+                          transition: 'transform 0.5s ease',
+                        }}
+                        className="group-hover:scale-[1.03] transition-transform duration-500"
+                      />
+                      {/* Skeleton overlay — fades out once image loads */}
+                      {!loaded[i] && (
+                        <div style={{
+                          position: 'absolute', inset: 0,
+                          background: 'linear-gradient(110deg,#1a1f2e 30%,#242b3d 50%,#1a1f2e 70%)',
+                          backgroundSize: '200% 100%',
+                          animation: 'shimmer 1.6s infinite',
+                          transition: 'opacity 0.4s ease',
+                        }} />
+                      )}
+                      <div
+                        style={{
+                          position: 'absolute',
+                          inset: 0,
+                          background: 'rgba(10,11,14,0.35)',
+                          opacity: 0,
+                          transition: 'opacity 0.3s ease',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                        }}
+                        className="group-hover:opacity-100"
+                      >
+                        <span style={{ color: '#fff', fontSize: '1.5rem', lineHeight: 1 }}>⤢</span>
+                      </div>
+                    </div>
+                  </div>
+                )
+              })}
             </div>
           </div>
-          </div>
-        )})}
-      </div>
+        ))
+      })()}
 
       {/* Lightbox */}
       {lightboxIndex !== null && (

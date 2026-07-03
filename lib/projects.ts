@@ -73,31 +73,42 @@ const ALLOWED_REFERENCE: Record<string, string[]> = {
   'Tissot Showroom Project': ['01_reference.png'],
 }
 
-function getImagesInFolder(folderPath: string): string[] {
+function getImagesInFolder(baseFolder: string): string[] {
   const IMAGE_EXTS = ['.png', '.jpg', '.jpeg', '.webp', '.gif']
-  const folderName = path.basename(folderPath)
+  const folderName = path.basename(baseFolder)
   const extraExcludes = FOLDER_EXCLUDES[folderName] ?? []
   const allowedRefs = ALLOWED_REFERENCE[folderName] ?? []
-  try {
-    return fs
-      .readdirSync(folderPath)
-      .filter(f => IMAGE_EXTS.includes(path.extname(f).toLowerCase()))
-      .filter(f => {
-        // Exclude all reference images site-wide, unless in allowed list
-        if (f.toLowerCase().startsWith('01_reference') && !allowedRefs.includes(f)) return false
-        // Exclude folder-specific files
-        if (extraExcludes.includes(f)) return false
-        return true
-      })
-      .sort((a, b) => {
-        // Sort numerically by leading number
-        const numA = parseInt(a) || 999
-        const numB = parseInt(b) || 999
-        return numA - numB
-      })
-  } catch {
-    return []
+
+  function walk(currentDir: string, relativeDir: string): string[] {
+    let results: string[] = []
+    try {
+      const entries = fs.readdirSync(currentDir, { withFileTypes: true })
+      for (const entry of entries) {
+        if (entry.isDirectory()) {
+          results = results.concat(
+            walk(path.join(currentDir, entry.name), path.join(relativeDir, entry.name))
+          )
+        } else {
+          const f = entry.name
+          if (!IMAGE_EXTS.includes(path.extname(f).toLowerCase())) continue
+          if (f.toLowerCase().startsWith('01_reference') && !allowedRefs.includes(f)) continue
+          if (extraExcludes.includes(f)) continue
+          results.push(path.join(relativeDir, f))
+        }
+      }
+    } catch {
+      // ignore
+    }
+    return results
   }
+
+  const images = walk(baseFolder, '')
+  return images.sort((a, b) => {
+    const numA = parseInt(path.basename(a)) || 999
+    const numB = parseInt(path.basename(b)) || 999
+    if (numA !== numB) return numA - numB
+    return a.localeCompare(b)
+  })
 }
 
 function getThumbnail(images: string[]): string {
