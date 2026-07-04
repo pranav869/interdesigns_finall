@@ -64,13 +64,13 @@ function parseProjTxt(filePath: string): { title: string; location: string; desc
 
 // Per-project extra excludes keyed by folder basename
 const FOLDER_EXCLUDES: Record<string, string[]> = {
-  'Mr Sunil K Project': ['11.png', '17.png', '21.png', '24.png'],
-  'Mr.Kushalji Project': ['28.png'],
+  'Mr Sunil K Project': ['11.webp', '17.webp', '21.webp', '24.webp'],
+  'Mr.Kushalji Project': ['28.webp'],
 }
 
 // Per-project allowed reference images (exceptions to global 01_reference filter)
 const ALLOWED_REFERENCE: Record<string, string[]> = {
-  'Tissot Showroom Project': ['01_reference.png'],
+  'Tissot Showroom Project': ['01_reference.webp'],
 }
 
 function getImagesInFolder(baseFolder: string): string[] {

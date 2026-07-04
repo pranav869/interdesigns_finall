@@ -273,9 +273,9 @@ export default async function ProjectPage(
           flexWrap: 'wrap',
           gap: 16,
         }}>
-          <Link href="/" style={{ fontFamily: "'Playfair Display', serif", fontSize: '1rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#f5f0e8', textDecoration: 'none' }}>
+          <a href="/" style={{ fontFamily: "'Playfair Display', serif", fontSize: '1rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: '#f5f0e8', textDecoration: 'none' }}>
             INTER <em style={{ color: '#c7a86d', fontStyle: 'normal' }}>DESIGNS</em>
-          </Link>
+          </a>
           <p style={{ fontFamily: 'Inter, sans-serif', fontSize: '0.58rem', letterSpacing: '0.2em', textTransform: 'uppercase', color: 'rgba(245,240,232,0.25)' }}>
             © 2026 Inter Designs. All rights reserved.
           </p>

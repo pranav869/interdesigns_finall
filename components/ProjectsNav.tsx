@@ -39,7 +39,7 @@ export default function ProjectsNav() {
           transition: 'background 0.4s ease',
         }}
       >
-        <Link
+        <a
           href="/"
           style={{
             fontFamily: "'Playfair Display', serif",
@@ -53,7 +53,7 @@ export default function ProjectsNav() {
           }}
         >
           INTER <em style={{ color: '#c7a86d', fontStyle: 'normal', fontWeight: 400 }}>DESIGNS</em>
-        </Link>
+        </a>
 
         {/* Desktop links */}
         <ul
