@@ -64,7 +64,7 @@ export default function ProjectsNav() {
             left: '50%',
             transform: 'translateX(-50%)',
           }}
-          className="hidden md:flex"
+          className="hidden xl:flex"
         >
           {[
             { label: 'Home', href: '/' },
@@ -128,7 +128,7 @@ export default function ProjectsNav() {
             transition: 'all 0.3s ease',
             whiteSpace: 'nowrap',
           }}
-          className="hidden md:inline-flex hover:bg-yellow-400 hover:text-black transition-all"
+          className="hidden xl:inline-flex hover:bg-yellow-400 hover:text-black transition-all"
         >
           Enquire →
         </a>
@@ -136,7 +136,7 @@ export default function ProjectsNav() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="md:hidden ml-3"
+          className="xl:hidden ml-3"
           style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}
           aria-label="Menu"
         >
