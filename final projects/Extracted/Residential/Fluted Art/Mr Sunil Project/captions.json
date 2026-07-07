@@ -1,21 +1,42 @@
 {
-    "02.webp": {
-        "heading": "Living/Dining Cum Kitchen"
+    "01.webp": {
+        "heading": "Kitchen"
     },
-    "06.webp": {
-        "heading": "Foyer"
+    "04.webp": {
+        "heading": "Dining"
+    },
+    "06.webp": {},
+    "06_1.jpg": {
+        "heading": "FOYER:"
+    },
+    "10.webp": {
+        "heading": "Balcony"
     },
     "12.webp": {
-        "heading": "MASTER BEDROOM",
-        "text": "Transforming master bedroom into a modern oasis! \ud83d\udcab of Mr. Sunil and family at Khushal Gardens Apartment, Kilpauk\n\nClean lines, neutral tones, and chic decor make every corner a stylish retreat. Embracing simplicity with a touch of sophistication \u2013 because a modern space is all about that perfect balance."
+        "heading": "Son's bedroom"
+    },
+    "13.webp": {
+        "text": "Study space of son’s bedroom"
+    },
+    "14.webp": {
+        "heading": "Bathroom"
+    },
+    "14_5.webp": {
+        "heading": "MASTER BEDROOM"
+    },
+    "14_7.jpeg": {
+        "heading": "Walking wardrobe"
     },
     "18.webp": {
         "heading": "GAMING ROOM",
         "text": "Leveling up gaming space! \ud83c\udfae\u2728 Check out the epic setup in gaming room RGB lights, comfy gaming chair, and a killer console corner. Ready to dive into immersive adventures in style! \ud83d\udd79\ufe0f"
     },
-    "22.webp": {
+    "22.jpg": {
         "heading": "POOJA ROOM",
         "text": "Elevated pooja room of Mr. Sunil and family at Khushal Gardens Apartment, Kilpauk.\n\nWith the ethereal beauty of a white-themed marble interior, adorned with the divine presence of Lord Mahavir Tirthankara on lotus design. \ud83c\udf1f\n\nEmbracing serenity and spirituality in every corner."
+    },
+    "23_1.png": {
+        "heading": "POOJA ROOM"
     },
     "25.webp": {
         "heading": "GUEST ROOM",

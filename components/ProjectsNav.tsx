@@ -4,13 +4,35 @@ import { useState, useEffect } from 'react'
 
 export default function ProjectsNav() {
   const [scrolled, setScrolled] = useState(false)
+  const [hidden, setHidden] = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
+    let lastScrollY = window.scrollY
+    let ticking = false
+
+    const onScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY
+          setScrolled(currentScrollY > 20)
+          
+          if (currentScrollY > lastScrollY && currentScrollY > 80 && !menuOpen) {
+            setHidden(true)
+          } else if (currentScrollY < lastScrollY) {
+            setHidden(false)
+          }
+          
+          lastScrollY = currentScrollY
+          ticking = false
+        })
+        ticking = true
+      }
+    }
+
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [menuOpen])
 
   return (
     <>
@@ -19,7 +41,7 @@ export default function ProjectsNav() {
           position: 'fixed',
           top: '18px',
           left: '50%',
-          transform: 'translateX(-50%)',
+          transform: `translate(-50%, ${hidden ? '-150%' : '0'})`,
           width: '92%',
           maxWidth: '1400px',
           height: '56px',
@@ -36,7 +58,7 @@ export default function ProjectsNav() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          transition: 'background 0.4s ease',
+          transition: 'background 0.4s ease, transform 0.4s cubic-bezier(0.22, 1, 0.36, 1)',
         }}
       >
         <a
@@ -56,6 +78,18 @@ export default function ProjectsNav() {
         </a>
 
         {/* Desktop links */}
+        <style>{`
+          @media (max-width: 1279px) {
+            .desktop-nav { display: none !important; }
+            .desktop-btn { display: none !important; }
+            .mobile-btn { display: block !important; }
+          }
+          @media (min-width: 1280px) {
+            .desktop-nav { display: flex !important; flex-direction: row; }
+            .desktop-btn { display: inline-flex !important; }
+            .mobile-btn { display: none !important; }
+          }
+        `}</style>
         <ul
           style={{
             gap: '40px',
@@ -64,7 +98,7 @@ export default function ProjectsNav() {
             left: '50%',
             transform: 'translateX(-50%)',
           }}
-          className="hidden xl:flex"
+          className="desktop-nav"
         >
           {[
             { label: 'Home', href: '/' },
@@ -128,7 +162,7 @@ export default function ProjectsNav() {
             transition: 'all 0.3s ease',
             whiteSpace: 'nowrap',
           }}
-          className="hidden xl:inline-flex hover:bg-yellow-400 hover:text-black transition-all"
+          className="desktop-btn hover:bg-yellow-400 hover:text-black transition-all"
         >
           Enquire →
         </a>
@@ -136,7 +170,7 @@ export default function ProjectsNav() {
         {/* Mobile hamburger */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
-          className="xl:hidden ml-3"
+          className="mobile-btn ml-3"
           style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px' }}
           aria-label="Menu"
         >

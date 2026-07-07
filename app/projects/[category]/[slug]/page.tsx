@@ -8,6 +8,7 @@ import {
   type Category,
 } from '@/lib/projects'
 import GalleryLightbox from '@/components/GalleryLightbox'
+import BeforeAfterSlider from '@/components/BeforeAfterSlider'
 import ProjectsNav from '@/components/ProjectsNav'
 
 const VALID_CATEGORIES: Category[] = ['residential', 'commercial', 'retail', 'modular-kitchen']
@@ -67,7 +68,7 @@ export default async function ProjectPage(
   const allImageUrls = project.images.map(
     filename => `${project.publicImageBase}/${encodeURIComponent(filename)}`
   )
-  const heroUrl = allImageUrls[0] ?? ''
+  const heroUrl = allImageUrls[0] ?? (project.thumbnail ? `${project.publicImageBase}/${encodeURIComponent(project.thumbnail)}` : '')
   const galleryImages = project.images
   const imageUrls = allImageUrls
 
@@ -196,6 +197,16 @@ export default async function ProjectPage(
           </section>
         )}
 
+        {/* Before / After Slider */}
+        {project.beforeAfterPairs && project.beforeAfterPairs.length > 0 && (
+          <BeforeAfterSlider
+            pairs={project.beforeAfterPairs.map(pair => ({
+              beforeUrl: `${project.publicImageBase}/${encodeURIComponent(pair.before)}`,
+              afterUrl: `${project.publicImageBase}/${encodeURIComponent(pair.after)}`,
+            }))}
+          />
+        )}
+
         {/* Gallery */}
         {imageUrls.length > 0 && (
           <section style={{ padding: '64px 6% 80px', maxWidth: '1400px', margin: '0 auto' }}>
@@ -207,7 +218,7 @@ export default async function ProjectPage(
               color: '#c7a86d',
               marginBottom: 36,
             }}>Gallery · {galleryImages.length} Images</p>
-            <GalleryLightbox images={imageUrls} filenames={galleryImages} captions={project.captions} altPrefix={project.title} showSectionHeadings={project.title === 'Mr. Ramabhat Residence'} />
+            <GalleryLightbox images={imageUrls} filenames={galleryImages} captions={project.captions} altPrefix={project.title} showSectionHeadings={project.title === 'Mr. Ramabhat Residence' || project.title === 'The Oak View'} />
           </section>
         )}
 
@@ -284,3 +295,4 @@ export default async function ProjectPage(
     </>
   )
 }
+// trigger hmr

@@ -94,7 +94,7 @@ export default function GalleryLightbox({ images, filenames, captions = {}, altP
             )}
             <div
               style={{
-                columns: 'clamp(320px, 33%, 500px)',
+                columns: 'clamp(320px, 48%, 700px)',
                 gap: '16px',
               }}
             >
@@ -109,18 +109,19 @@ export default function GalleryLightbox({ images, filenames, captions = {}, altP
                         {caption.heading && (
                           <p style={{
                             fontFamily: 'Playfair Display, serif',
-                            fontSize: 'clamp(1.8rem, 4vw, 2.6rem)',
+                            fontSize: 'clamp(1.2rem, 3vw, 1.8rem)',
                             fontWeight: 500,
                             color: '#f5f0e8',
                             marginBottom: '14px',
                             letterSpacing: '0.08em',
+                            textTransform: 'uppercase',
                             textShadow: '0 0 30px rgba(199,168,109,0.15)',
                           }}>{caption.heading}</p>
                         )}
                         {caption.text && caption.text.split('\n\n').map((para, pi) => (
                           <p key={pi} style={{
                             fontFamily: 'Inter, sans-serif',
-                            fontSize: '0.88rem',
+                            fontSize: '1.15rem',
                             lineHeight: 1.85,
                             color: 'rgba(245,240,232,0.72)',
                             marginBottom: pi < caption.text!.split('\n\n').length - 1 ? '12px' : 0,

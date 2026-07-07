@@ -8,6 +8,11 @@ export interface ImageCaption {
   text?: string
 }
 
+export interface BeforeAfterPair {
+  before: string
+  after: string
+}
+
 export interface Project {
   title: string
   location: string
@@ -21,6 +26,7 @@ export interface Project {
   images: string[]  // filenames only e.g. ['02.png', '03.png']
   thumbnail: string  // filename of thumbnail
   captions: Record<string, ImageCaption>  // filename -> caption
+  beforeAfterPairs?: BeforeAfterPair[]  // optional before/after pairs
 }
 
 const EXTRACTED_ROOT = path.join(process.cwd(), 'final projects', 'Extracted')
@@ -64,8 +70,9 @@ function parseProjTxt(filePath: string): { title: string; location: string; desc
 
 // Per-project extra excludes keyed by folder basename
 const FOLDER_EXCLUDES: Record<string, string[]> = {
-  'Mr Sunil K Project': ['11.webp', '17.webp', '21.webp', '24.webp'],
+  'Mr Sunil Project': ['07.webp', '11.webp', '17.webp', '21.webp', '22.webp', '23.webp', '24.webp'],
   'Mr.Kushalji Project': ['28.webp'],
+  'classic kitchen': ['before1.jpeg', 'before2.jpeg', 'after1.jpeg', 'after2.jpeg'],
 }
 
 // Per-project allowed reference images (exceptions to global 01_reference filter)
@@ -126,6 +133,16 @@ function readCaptions(folderPath: string): Record<string, ImageCaption> {
   }
 }
 
+function readBeforeAfterPairs(folderPath: string): BeforeAfterPair[] | undefined {
+  try {
+    const baPath = path.join(folderPath, 'beforeafter.json')
+    if (!fs.existsSync(baPath)) return undefined
+    return JSON.parse(fs.readFileSync(baPath, 'utf-8'))
+  } catch {
+    return undefined
+  }
+}
+
 function readProjectsFromCategory(
   categoryDir: string,
   category: Category,
@@ -147,7 +164,8 @@ function readProjectsFromCategory(
     if (fs.existsSync(projTxtDirect)) {
       // Direct project folder (e.g. Commercial/Future FX Studio Project)
       const images = getImagesInFolder(childPath)
-      const thumbnail = getThumbnail(images)
+      const baPairs = readBeforeAfterPairs(childPath)
+      const thumbnail = getThumbnail(images) || (baPairs && baPairs.length > 0 ? baPairs[0].after : '')
       const { title, location, description } = parseProjTxt(projTxtDirect)
       const displayTitle = title || entry.name.replace(/ Project$/, '').trim()
       const slug = toSlug(displayTitle || entry.name)
@@ -165,6 +183,7 @@ function readProjectsFromCategory(
         images,
         thumbnail,
         captions: readCaptions(childPath),
+        beforeAfterPairs: baPairs,
       })
     } else {
       // Subcategory folder — go one level deeper
@@ -175,7 +194,8 @@ function readProjectsFromCategory(
         const projTxt = path.join(projectPath, 'proj.txt')
         if (!fs.existsSync(projectPath)) continue
         const images = getImagesInFolder(projectPath)
-        const thumbnail = getThumbnail(images)
+        const baPairs = readBeforeAfterPairs(projectPath)
+        const thumbnail = getThumbnail(images) || (baPairs && baPairs.length > 0 ? baPairs[0].after : '')
         const { title, location, description } = fs.existsSync(projTxt)
           ? parseProjTxt(projTxt)
           : { title: '', location: '', description: '' }
@@ -195,6 +215,7 @@ function readProjectsFromCategory(
           images,
           thumbnail,
           captions: readCaptions(projectPath),
+          beforeAfterPairs: baPairs,
         })
       }
     }
