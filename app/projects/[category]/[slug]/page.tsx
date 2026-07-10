@@ -156,9 +156,9 @@ export default async function ProjectPage(
             padding: '72px 6%',
             maxWidth: '1400px',
             margin: '0 auto',
-            display: 'grid',
-            gridTemplateColumns: '1fr 2fr',
-            gap: '48px',
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '32px',
             borderBottom: '1px solid rgba(199,168,109,0.1)',
           }}>
             <div>
@@ -177,22 +177,25 @@ export default async function ProjectPage(
                 textTransform: 'uppercase',
                 color: 'rgba(245,240,232,0.4)',
                 lineHeight: 1.8,
+                whiteSpace: 'pre-wrap',
               }}>
                 {project.categoryLabel}{project.subcategory ? ` · ${project.subcategory}` : ''}
                 {locationDisplay ? `\n${locationDisplay}` : ''}
               </p>
             </div>
             <div>
-              <p style={{
-                fontFamily: 'Cormorant Garamond, serif',
-                fontSize: 'clamp(1rem, 2vw, 1.3rem)',
-                fontWeight: 300,
-                lineHeight: 1.85,
-                color: 'rgba(245,240,232,0.72)',
-                whiteSpace: 'pre-wrap',
-              }}>
-                {project.description}
-              </p>
+              {project.description.split('\n\n').map((para, i) => (
+                <p key={i} style={{
+                  fontFamily: 'Cormorant Garamond, serif',
+                  fontSize: 'clamp(1rem, 2vw, 1.3rem)',
+                  fontWeight: 300,
+                  lineHeight: 1.85,
+                  color: 'rgba(245,240,232,0.72)',
+                  marginBottom: '1.5em',
+                }}>
+                  {para}
+                </p>
+              ))}
             </div>
           </section>
         )}
