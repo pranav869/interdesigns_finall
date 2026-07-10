@@ -172,7 +172,7 @@ export default async function ProjectPage(
               }}>About the Project</p>
               <p style={{
                 fontFamily: 'Cormorant Garamond, serif',
-                fontSize: '0.85rem',
+                fontSize: '1rem',
                 letterSpacing: '0.12em',
                 textTransform: 'uppercase',
                 color: 'rgba(245,240,232,0.4)',

@@ -82,7 +82,7 @@ export default function GalleryLightbox({ images, filenames, captions = {}, altP
             {showSectionHeadings && (
               <h2 style={{
                 fontFamily: 'Playfair Display, serif',
-                fontSize: '2rem',
+                fontSize: '1.5rem',
                 color: '#c7a86d',
                 marginBottom: '32px',
                 textTransform: 'capitalize',
