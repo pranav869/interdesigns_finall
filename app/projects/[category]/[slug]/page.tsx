@@ -187,7 +187,9 @@ export default async function ProjectPage(
               {project.description.split('\n\n').map((para, i) => (
                 <p key={i} style={{
                   fontFamily: 'Cormorant Garamond, serif',
-                  fontSize: 'clamp(1.8rem, 3.5vw, 2.4rem)',
+                  fontSize: project.description.length < 120 
+                    ? 'clamp(1.8rem, 3.5vw, 2.4rem)' 
+                    : 'clamp(1.1rem, 1.5vw, 1.35rem)',
                   fontWeight: 300,
                   lineHeight: 1.85,
                   color: 'rgba(245,240,232,0.72)',
