@@ -2,6 +2,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import fs from 'fs'
 import path from 'path'
 
+export const dynamic = 'force-dynamic'
+
 const CATEGORY_DIR_MAP: Record<string, string> = {
   residential: 'Residential',
   commercial: 'Commercial',
@@ -47,7 +49,7 @@ export async function GET(
   return new NextResponse(fileBuffer, {
     headers: {
       'Content-Type': contentType,
-      'Cache-Control': 'public, max-age=31536000, immutable',
+      'Cache-Control': 'no-cache, no-store, must-revalidate',
     },
   })
 }
