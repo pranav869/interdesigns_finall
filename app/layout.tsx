@@ -4,6 +4,9 @@ import './globals.css'
 export const metadata: Metadata = {
   title: 'Inter Designs | Luxury Interior Design Studio — Chennai',
   description: 'Crafting bespoke luxury interiors that reflect the aspirations of the people who live and work within them. Chennai\'s premier design studio.',
+  icons: {
+    icon: '/favicon.webp',
+  },
   openGraph: {
     title: 'Inter Designs | Luxury Interior Design Studio',
     description: 'Bespoke luxury interiors crafted in Chennai.',
